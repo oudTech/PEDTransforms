@@ -5,6 +5,7 @@ import PostCard from "@/components/blog/PostCard";
 import {
   CallToAction,
   CheckIcon,
+  Eyebrow,
   Lifecycle,
   SectionHeading,
   WhyUsGrid,
@@ -81,9 +82,7 @@ function Hero() {
       <div className="pointer-events-none absolute -right-24 top-0 h-96 w-96 rounded-full bg-[var(--brand)]/[0.06] blur-3xl" />
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:px-8 lg:py-24">
         <div>
-          <p className="inline-flex items-center gap-2 rounded-full border border-[var(--brand)]/15 bg-white px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[var(--brand)]">
-            {company.tagline}
-          </p>
+          <Eyebrow>{company.tagline}</Eyebrow>
           <h1 className="mt-6 text-balance text-4xl font-semibold leading-[1.1] tracking-tight text-[#1a1a1a] sm:text-5xl lg:text-[56px]">
             Turn technology investment into{" "}
             <span className="text-[var(--brand)]">business value</span>

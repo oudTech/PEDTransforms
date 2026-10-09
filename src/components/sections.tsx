@@ -4,6 +4,28 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import type { Crumb } from "@/lib/seo";
 import { lifecycle, whyUs } from "@/data/site";
 
+export function Eyebrow({
+  children,
+  tone = "light",
+  className = "",
+}: {
+  children: ReactNode;
+  tone?: "light" | "dark";
+  className?: string;
+}) {
+  const dark = tone === "dark";
+  return (
+    <p
+      className={`flex items-center gap-4 text-xs font-medium uppercase tracking-[0.22em] sm:text-sm ${
+        dark ? "text-white/65" : "text-[#6f6a66]"
+      } ${className}`}
+    >
+      <span aria-hidden className={`h-px w-12 shrink-0 ${dark ? "bg-white/35" : "bg-[#b5aea8]"}`} />
+      {children}
+    </p>
+  );
+}
+
 export function PageHero({
   eyebrow,
   title,
@@ -24,12 +46,12 @@ export function PageHero({
       <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <Breadcrumbs items={breadcrumbs} tone="light" />
         {eyebrow && (
-          <p className="mt-8 text-sm font-semibold uppercase tracking-widest text-[#ff4d4d]">
+          <Eyebrow tone="dark" className="mt-8">
             {eyebrow}
-          </p>
+          </Eyebrow>
         )}
         <h1
-          className={`${eyebrow ? "mt-3" : "mt-8"} max-w-4xl text-balance text-4xl font-semibold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-[56px]`}
+          className={`${eyebrow ? "mt-5" : "mt-8"} max-w-4xl text-balance text-4xl font-semibold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-[56px]`}
         >
           {title}
         </h1>

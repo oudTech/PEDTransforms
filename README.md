@@ -35,6 +35,8 @@ Home, About Us, Our Services, six service pages under `/services/*`, Blog, and C
 | `RESEND_API_KEY` | For the contact form | API key from [resend.com/api-keys](https://resend.com/api-keys) |
 | `CONTACT_TO_EMAIL` | For the contact form | Inbox that receives enquiries |
 | `CONTACT_FROM_EMAIL` | For the contact form | Sender on a domain verified in Resend, e.g. `PEDTransforms <website@yourdomain.com>` |
+| `SMARTSUPP_ENABLED` | Optional | `true` shows the Smartsupp live chat, `false` hides it. Redeploy after changing |
+| `SMARTSUPP_KEY` | With live chat | Key from the Smartsupp install snippet (`_smartsupp.key`) |
 | `GOOGLE_SITE_VERIFICATION` | Optional | Google Search Console token |
 | `BING_SITE_VERIFICATION` | Optional | Bing Webmaster Tools token |
 | `NEXT_SERVER_ACTIONS_ENCRYPTION_KEY` | Multi-instance hosting | Stable key so form submissions work across instances |

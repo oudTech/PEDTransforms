@@ -3,6 +3,7 @@ import { VisualEditing } from "next-sanity/visual-editing";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import JsonLd from "@/components/JsonLd";
+import SmartsuppChat from "@/components/SmartsuppChat";
 import DraftModeBanner from "@/components/blog/DraftModeBanner";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 
@@ -24,7 +25,7 @@ export default async function SiteLayout({ children }: LayoutProps<"/">) {
         {children}
       </main>
       <Footer />
-      {isDraftMode && <VisualEditing />}
+      {isDraftMode ? <VisualEditing /> : <SmartsuppChat />}
     </>
   );
 }
