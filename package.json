@@ -1,17 +1,28 @@
 {
-  "name": "pedtransforms-tmp",
+  "name": "pedtransforms",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sanity:seed": "node --env-file=.env.local scripts/seed.mjs"
   },
   "dependencies": {
-    "next": "16.3.6",
+    "@sanity/client": "^8.9.0",
+    "@sanity/icons": "^5.2.3",
+    "@sanity/image-url": "^2.1.1",
+    "@sanity/vision": "^6.18.0",
+    "next": "16.3.8",
+    "next-sanity": "^13.3.4",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "resend": "^6.32.1",
+    "sanity": "^6.18.0",
+    "server-only": "^0.0.1",
+    "styled-components": "^6.5.3",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -19,7 +30,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.3.6",
+    "eslint-config-next": "16.3.8",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

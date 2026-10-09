@@ -1,0 +1,42 @@
+import type { PortableTextBlock } from "next-sanity";
+import type { SanityImageSource } from "@sanity/image-url";
+
+export type SanityImage = SanityImageSource & {
+  alt?: string;
+  caption?: string;
+  dimensions?: { width: number; height: number; aspectRatio: number };
+};
+
+export type Category = {
+  _id: string;
+  title: string;
+  slug: string;
+};
+
+export type Author = {
+  name: string;
+  role?: string;
+  image?: SanityImage;
+  bio?: string;
+};
+
+export type PostCard = {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt?: string;
+  publishedAt: string;
+  featured?: boolean;
+  mainImage?: SanityImage;
+  estimatedReadingTime?: number;
+  author?: Author;
+  categories?: Category[];
+};
+
+export type Post = PostCard & {
+  _updatedAt: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  body?: PortableTextBlock[];
+  related?: PostCard[];
+};
