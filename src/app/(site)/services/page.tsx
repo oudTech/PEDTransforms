@@ -74,7 +74,7 @@ export default function ServicesPage() {
                   intro={category.summary}
                 />
               </div>
-              <div className="grid gap-6 sm:grid-cols-2">
+              <div className="grid grid-cols-2 gap-3 sm:gap-6">
                 {servicesInCategory(category.id).map((service) => (
                   <ServiceCard key={service.slug} service={service} />
                 ))}

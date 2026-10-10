@@ -3,12 +3,21 @@
 import { headers } from "next/headers";
 import { Resend } from "resend";
 import { z } from "zod";
+import { defaultDialCode, dialCodes } from "@/data/dial-codes";
 import { company } from "@/data/site";
 import { getSubService, subServices } from "@/data/services";
 import { serverEnv } from "@/lib/env.server";
 import { rateLimit } from "@/lib/rate-limit";
 
-export type ContactField = "name" | "email" | "company" | "phone" | "service" | "message";
+export type ContactField =
+  | "firstName"
+  | "lastName"
+  | "email"
+  | "company"
+  | "phoneCountry"
+  | "phone"
+  | "service"
+  | "message";
 
 export type ContactState = {
   status: "idle" | "success" | "error";
@@ -21,19 +30,26 @@ const MIN_FILL_MS = 3_000;
 const MAX_FILL_MS = 24 * 60 * 60 * 1000;
 const singleLine = /^[^\r\n<>]*$/;
 
-const schema = z.object({
-  name: z
+const personName = (label: string) =>
+  z
     .string()
     .trim()
-    .min(2, "Please enter your name.")
-    .max(100, "Name must be 100 characters or fewer.")
-    .regex(singleLine, "Name contains characters that are not allowed."),
+    .min(1, `Please enter your ${label}.`)
+    .max(60, `Your ${label} must be 60 characters or fewer.`)
+    .regex(singleLine, `Your ${label} contains characters that are not allowed.`);
+
+const schema = z.object({
+  firstName: personName("first name"),
+  lastName: personName("last name"),
   email: z.email("Please enter a valid email address.").max(254),
   company: z
     .string()
     .trim()
     .max(120, "Organisation must be 120 characters or fewer.")
     .regex(singleLine, "Organisation contains characters that are not allowed."),
+  phoneCountry: z.enum(dialCodes.map((item) => item.iso) as [string, ...string[]], {
+    error: "Please choose a country code.",
+  }),
   phone: z
     .string()
     .trim()
@@ -63,6 +79,14 @@ function escapeHtml(value: string) {
     .replace(/'/g, "&#39;");
 }
 
+/** Adds the chosen country code unless the visitor already typed one, dropping a local leading 0. */
+function internationalPhone(country: string, phone: string) {
+  if (!phone) return "";
+  if (phone.startsWith("+")) return phone;
+  const code = dialCodes.find((item) => item.iso === country)?.code ?? "";
+  return `${code} ${phone.replace(/^0+/, "")}`.trim();
+}
+
 async function clientIp() {
   const headerList = await headers();
   const forwarded = headerList.get("x-forwarded-for")?.split(",")[0]?.trim();
@@ -74,9 +98,11 @@ export async function submitContact(
   formData: FormData,
 ): Promise<ContactState> {
   const values = {
-    name: text(formData, "name"),
+    firstName: text(formData, "firstName"),
+    lastName: text(formData, "lastName"),
     email: text(formData, "email"),
     company: text(formData, "company"),
+    phoneCountry: text(formData, "phoneCountry") || defaultDialCode,
     phone: text(formData, "phone"),
     service: text(formData, "service") || "general",
     message: text(formData, "message"),
@@ -128,12 +154,13 @@ export async function submitContact(
   }
 
   const data = parsed.data;
+  const name = `${data.firstName} ${data.lastName}`;
   const topic = getSubService(data.service)?.title ?? "General enquiry";
   const rows: [string, string][] = [
-    ["Name", data.name],
+    ["Name", name],
     ["Email", data.email],
     ["Organisation", data.company || "Not provided"],
-    ["Phone", data.phone || "Not provided"],
+    ["Phone", internationalPhone(data.phoneCountry, data.phone) || "Not provided"],
     ["Topic", topic],
   ];
 
@@ -158,7 +185,7 @@ export async function submitContact(
       from: contactFromEmail,
       to: contactToEmail,
       replyTo: data.email,
-      subject: `Website enquiry: ${topic} from ${data.name}`,
+      subject: `Website enquiry: ${topic} from ${name}`,
       html,
       text: plain,
     });

@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import CookieSettingsButton from "@/components/CookieSettingsButton";
+import { legalLinks } from "@/data/legal";
 import { companyLinks } from "@/data/navigation";
 import { subServices } from "@/data/services";
 import { company, contact } from "@/data/site";
@@ -9,10 +11,10 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#111] text-white">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_0.8fr_1fr] lg:px-8">
-        <div>
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-6 gap-y-10 px-4 py-16 sm:px-6 lg:grid-cols-[1.3fr_1fr_0.8fr_1fr] lg:gap-10 lg:px-8">
+        <div className="col-span-2 lg:col-span-1">
           <Link href="/" className="inline-block" aria-label={`${company.name} home`}>
-            <Image src="/logo-dark.png" alt={company.name} width={864} height={216} className="h-11 w-auto" />
+            <Image src="/logo-dark.png" alt={company.name} width={150} height={44} className="h-11 w-auto" />
           </Link>
           <p className="mt-5 text-sm font-semibold tracking-wide text-white">
             {company.tagline}
@@ -51,7 +53,7 @@ export default function Footer() {
           </ul>
         </nav>
 
-        <div>
+        <div className="col-span-2 lg:col-span-1">
           <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider">Get in touch</h2>
           {hasContact ? (
             <address className="space-y-2.5 text-sm not-italic text-white/65">
@@ -86,11 +88,24 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-6 text-xs text-white/50 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
           <p>
             © {new Date().getFullYear()} {company.name}. All rights reserved.
           </p>
-          <p>We help organisations turn technology investment into business value.</p>
+          <nav aria-label="Legal">
+            <ul className="flex flex-wrap gap-x-5 gap-y-2">
+              {legalLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="transition hover:text-white">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <CookieSettingsButton className="transition hover:text-white" />
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </footer>

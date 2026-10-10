@@ -11,9 +11,13 @@ export const company = {
 
 // Only fields with a value are displayed or added to structured data.
 export const contact = {
-  email: "",
-  phone: "",
-  address: "",
+  email: "info@pedtransforms.com",
+  phone: "+234 706 523 9083",
+  address: "Port Harcourt, Nigeria",
+  /** Structured parts of `address`, for search engines. */
+  locality: "Port Harcourt",
+  region: "Rivers",
+  countryCode: "NG",
   hours: "",
 };
 
@@ -24,6 +28,13 @@ export const vision =
 
 export const mission =
   "To empower organisations with the technology, talent, automation and strategic expertise they need to transform their operations, solve complex business challenges and achieve sustainable growth.";
+
+export const popularPages = [
+  { label: "Services", href: "/services" },
+  { label: "About us", href: "/about" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/contact" },
+];
 
 export const lifecycle = [
   {
@@ -90,6 +101,11 @@ export const whyUs = [
     description:
       "Solutions designed to evolve as your business, technology requirements and capabilities grow.",
   },
+  {
+    title: "One accountable partner",
+    description:
+      "One partner accountable from the first conversation through delivery and ongoing support.",
+  },
 ];
 
 export const whatWeDo = [
@@ -118,8 +134,3 @@ export const whatWeDo = [
     href: "/services/technology-talent-managed-services",
   },
 ];
-
-export const images = {
-  hero: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=1400&h=1000&fit=crop",
-  about: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&h=900&fit=crop",
-};

@@ -1,10 +1,14 @@
 import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
+import CookieConsent from "@/components/CookieConsent";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import JsonLd from "@/components/JsonLd";
+import RevealObserver from "@/components/RevealObserver";
 import SmartsuppChat from "@/components/SmartsuppChat";
 import DraftModeBanner from "@/components/blog/DraftModeBanner";
+import { serviceMenu } from "@/data/services";
+import { serverEnv } from "@/lib/env.server";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 
 export default async function SiteLayout({ children }: LayoutProps<"/">) {
@@ -20,12 +24,14 @@ export default async function SiteLayout({ children }: LayoutProps<"/">) {
         Skip to content
       </a>
       {isDraftMode && <DraftModeBanner />}
-      <Header />
+      <Header menu={serviceMenu} />
       <main id="main" className="flex-1">
         {children}
       </main>
       <Footer />
       {isDraftMode ? <VisualEditing /> : <SmartsuppChat />}
+      <CookieConsent liveChat={Boolean(serverEnv.smartsuppKey)} />
+      <RevealObserver />
     </>
   );
 }

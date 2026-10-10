@@ -1,16 +1,47 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 :root {
   --background: #ffffff;
   --foreground: #1a1a1a;
   --brand: #bd0000;
   --brand-dark: #9a0000;
+
+  /* shadcn/ui tokens, mapped to the brand */
+  --primary: var(--brand);
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #1a1a1a;
+  --muted: #f5f5f5;
+  --muted-foreground: #666666;
+  --accent: #fff1f1;
+  --accent-foreground: var(--brand);
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: var(--brand);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-brand: var(--brand);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
   --font-sans: var(--font-poppins), "Poppins", ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -18,6 +49,48 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
+ * Scroll reveal. RevealObserver adds .reveal-ready to <html> once JS runs, so
+ * content stays visible without JS. Elements already on screen at load are
+ * marked data-revealed="static" and never animate.
+ */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-ready [data-reveal]:not([data-revealed]) {
+    opacity: 0;
+  }
+
+  .reveal-ready [data-reveal][data-revealed="in"] {
+    animation: reveal-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms) both;
+  }
+
+  [data-reveal]:nth-child(2) {
+    --reveal-delay: 80ms;
+  }
+  [data-reveal]:nth-child(3) {
+    --reveal-delay: 160ms;
+  }
+  [data-reveal]:nth-child(4) {
+    --reveal-delay: 240ms;
+  }
+  [data-reveal]:nth-child(5) {
+    --reveal-delay: 320ms;
+  }
+  [data-reveal]:nth-child(n + 6) {
+    --reveal-delay: 400ms;
+  }
 }
 
 @keyframes marquee {
@@ -36,4 +109,169 @@ body {
 
 .animate-marquee:hover {
   animation-play-state: paused;
+}
+
+@keyframes marquee-y {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+.animate-marquee-y {
+  animation: marquee-y var(--marquee-duration, 30s) linear infinite;
+}
+
+.animate-marquee-y:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-y {
+    animation: none;
+  }
+}
+
+/* AnimatedGridPattern squares. */
+@keyframes grid-square {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  45% {
+    opacity: var(--grid-max-opacity);
+  }
+  90% {
+    opacity: 0;
+  }
+}
+
+.grid-square {
+  opacity: 0;
+  animation: grid-square 8s ease-in-out infinite;
+}
+
+/* ShootingStarsGrid. */
+@keyframes ssg-glow {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes ssg-twinkle {
+  from {
+    opacity: calc(var(--star-opacity) * 0.5);
+    transform: scale(0.85);
+  }
+  to {
+    opacity: var(--star-opacity);
+    transform: scale(1.16);
+  }
+}
+
+@keyframes ssg-run-x {
+  0% {
+    opacity: 0;
+    transform: translateX(-18cqw) scaleX(0.35);
+  }
+  5%,
+  24% {
+    opacity: 1;
+  }
+  30%,
+  100% {
+    opacity: 0;
+    transform: translateX(112cqw) scaleX(0.8);
+  }
+}
+
+@keyframes ssg-run-y {
+  0% {
+    opacity: 0;
+    transform: translateY(-18cqh) scaleY(0.35);
+  }
+  5%,
+  24% {
+    opacity: 1;
+  }
+  30%,
+  100% {
+    opacity: 0;
+    transform: translateY(112cqh) scaleY(0.8);
+  }
+}
+
+.ssg-glow {
+  animation: ssg-glow 12s ease-in-out infinite;
+}
+
+.ssg-star {
+  animation: ssg-twinkle 3s ease-in-out infinite alternate;
+}
+
+.ssg-run-x,
+.ssg-run-y {
+  opacity: 0;
+  animation: ssg-run-x 8s ease-out infinite both;
+}
+
+.ssg-run-y {
+  animation-name: ssg-run-y;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid-square {
+    animation: none;
+    opacity: calc(var(--grid-max-opacity) / 2);
+  }
+
+  .ssg-glow,
+  .ssg-star,
+  .ssg-run-x,
+  .ssg-run-y {
+    animation: none;
+  }
+}
+
+/* StackingCards: shrink cards and settle images as the stack scrolls. */
+.stack-cards {
+  view-timeline: --stack block;
+}
+
+@keyframes stack-shrink {
+  to {
+    scale: var(--stack-target);
+  }
+}
+
+@keyframes stack-zoom {
+  from {
+    scale: 1.25;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .stack-card {
+      animation: stack-shrink linear both;
+      animation-timeline: --stack;
+    }
+
+    .stack-image {
+      animation: stack-zoom linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+  }
 }

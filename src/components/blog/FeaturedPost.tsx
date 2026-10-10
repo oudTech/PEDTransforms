@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { stegaClean } from "next-sanity";
-import { urlFor } from "@/sanity/lib/image";
+import { blurProps, urlFor } from "@/sanity/lib/image";
 import type { PostCard } from "@/sanity/lib/types";
 import PostMeta from "./PostMeta";
+import ShareButton from "./ShareButton";
 
 export default function FeaturedPost({ post }: { post: PostCard }) {
   const href = `/blog/${stegaClean(post.slug)}`;
@@ -16,8 +17,10 @@ export default function FeaturedPost({ post }: { post: PostCard }) {
             src={urlFor(post.mainImage).width(1400).height(900).url()}
             alt={post.mainImage.alt || post.title}
             fill
-            priority
-            sizes="(max-width: 1024px) 100vw, 60vw"
+            fetchPriority="high"
+            loading="eager"
+            {...blurProps(post.mainImage)}
+            sizes="(max-width: 1024px) 100vw, 720px"
             className="object-cover transition duration-700 group-hover:scale-[1.03]"
           />
         ) : (
@@ -53,12 +56,15 @@ export default function FeaturedPost({ post }: { post: PostCard }) {
         <div className="mt-7">
           <PostMeta post={post} tone="light" />
         </div>
-        <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-white">
-          Read article
-          <span className="transition group-hover:translate-x-1" aria-hidden>
-            →
+        <div className="mt-8 flex items-center justify-between gap-4">
+          <span className="inline-flex items-center gap-2 text-sm font-semibold text-white">
+            Read article
+            <span className="transition group-hover:translate-x-1" aria-hidden>
+              →
+            </span>
           </span>
-        </span>
+          <ShareButton path={href} title={post.title} tone="light" />
+        </div>
       </div>
     </article>
   );

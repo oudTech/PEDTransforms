@@ -6,13 +6,13 @@ import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { company } from "@/data/site";
 import { mainNav } from "@/data/navigation";
-import { serviceCategories, servicesInCategory } from "@/data/services";
+import type { ServiceMenu } from "@/data/services";
 
 function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href);
 }
 
-export default function Header() {
+export default function Header({ menu }: { menu: ServiceMenu }) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -64,9 +64,9 @@ export default function Header() {
           <Image
             src="/logo-light.png"
             alt={company.name}
-            width={864}
-            height={216}
-            priority
+            width={150}
+            height={44}
+            preload
             className="h-10 w-auto sm:h-11"
           />
         </Link>
@@ -126,13 +126,13 @@ export default function Header() {
                 >
                   <div className="overflow-hidden rounded-2xl border border-black/[0.06] bg-white shadow-[0_24px_60px_-20px_rgba(0,0,0,0.25)]">
                     <div className="grid grid-cols-3 gap-2 p-5">
-                      {serviceCategories.map((category) => (
+                      {menu.map((category) => (
                         <div key={category.id}>
                           <p className="px-3 text-xs font-semibold uppercase tracking-widest text-[var(--brand)]">
                             {category.number} {category.title}
                           </p>
                           <ul className="mt-2 space-y-1">
-                            {servicesInCategory(category.id).map((service) => (
+                            {category.services.map((service) => (
                               <li key={service.slug}>
                                 <Link
                                   href={`/services/${service.slug}`}
@@ -220,12 +220,12 @@ export default function Header() {
                   </svg>
                 </button>
                 <div id="mobile-services" hidden={!mobileServicesOpen} className="pb-3">
-                  {serviceCategories.map((category) => (
+                  {menu.map((category) => (
                     <div key={category.id} className="mb-3">
                       <p className="text-xs font-semibold uppercase tracking-widest text-[var(--brand)]">
                         {category.title}
                       </p>
-                      {servicesInCategory(category.id).map((service) => (
+                      {category.services.map((service) => (
                         <Link
                           key={service.slug}
                           href={`/services/${service.slug}`}

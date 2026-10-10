@@ -8,7 +8,7 @@ import {
 } from "next-sanity";
 import { slugify } from "@/lib/format";
 import { isExternalHref, safeHref } from "@/lib/url";
-import { urlFor } from "@/sanity/lib/image";
+import { blurProps, urlFor } from "@/sanity/lib/image";
 import type { SanityImage } from "@/sanity/lib/types";
 import CodeBlock from "./CodeBlock";
 
@@ -139,6 +139,7 @@ const components: PortableTextComponents = {
             alt={value.alt || ""}
             width={Math.round(width * ratio)}
             height={Math.round(height * ratio)}
+            {...blurProps(value)}
             sizes="(max-width: 768px) 100vw, 768px"
             className="w-full rounded-2xl"
           />

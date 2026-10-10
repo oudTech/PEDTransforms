@@ -1,7 +1,9 @@
+import { Clock, Mail, MapPin, PhoneCall, type LucideIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import JsonLd from "@/components/JsonLd";
 import { PageHero } from "@/components/sections";
+import { serviceMenu } from "@/data/services";
 import { company, contact } from "@/data/site";
 import { absoluteUrl, organizationId, pageMetadata } from "@/lib/seo";
 import ContactForm, { ContactFormWithParams } from "./ContactForm";
@@ -15,33 +17,19 @@ export const metadata: Metadata = pageMetadata({
   path: "/contact",
 });
 
-const nextSteps = [
-  {
-    title: "We review your enquiry",
-    description: "A specialist reads your message and the service area it relates to.",
-  },
-  {
-    title: "We arrange a conversation",
-    description: "We contact you to understand your objectives, environment and constraints.",
-  },
-  {
-    title: "We recommend a next step",
-    description: "You receive a practical recommendation, whether that is advice, a solution or a team.",
-  },
-];
-
-type Detail = { label: string; value: string; href?: string };
+type Detail = { label: string; value: string; href?: string; icon: LucideIcon };
 
 export default function ContactPage() {
   const details = [
-    contact.email && { label: "Email", value: contact.email, href: `mailto:${contact.email}` },
+    contact.email && { label: "Email", value: contact.email, href: `mailto:${contact.email}`, icon: Mail },
     contact.phone && {
       label: "Phone",
       value: contact.phone,
       href: `tel:${contact.phone.replace(/[^\d+]/g, "")}`,
+      icon: PhoneCall,
     },
-    contact.address && { label: "Address", value: contact.address },
-    contact.hours && { label: "Business hours", value: contact.hours },
+    contact.address && { label: "Location", value: contact.address, icon: MapPin },
+    contact.hours && { label: "Business hours", value: contact.hours, icon: Clock },
   ].filter((item): item is Detail => Boolean(item));
 
   return (
@@ -64,55 +52,52 @@ export default function ContactPage() {
         intro="Tell us about your objectives and challenges. We will help you identify the right technology, automation, talent or advisory support."
       />
 
-      <section className="bg-[#fafafa] py-16 lg:py-24">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.6fr_1fr] lg:px-8">
-          <div>
-            <h2 className="sr-only">Send us a message</h2>
-            <Suspense fallback={<ContactForm />}>
-              <ContactFormWithParams />
-            </Suspense>
-          </div>
+      <section className="bg-white py-14 sm:py-20 lg:py-24" aria-labelledby="contact-heading">
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_1.25fr] lg:gap-16 lg:px-8">
+          <div className="lg:pt-4">
+            <h2
+              id="contact-heading"
+              className="text-balance text-[2rem] font-semibold leading-[1.1] tracking-tight text-[#1a1a1a] sm:text-5xl"
+            >
+              How can we help you today?
+            </h2>
+            <p className="mt-4 max-w-md text-[17px] leading-relaxed text-[#666]">
+              Our team is just a message or call away. Tell us what you want to achieve and we will
+              recommend a practical next step.
+            </p>
 
-          <aside className="space-y-6">
             {details.length > 0 && (
-              <div className="rounded-2xl border border-black/[0.06] bg-white p-7">
-                <h2 className="text-lg font-semibold text-[#1a1a1a]">Contact details</h2>
-                <address className="mt-4 space-y-4 not-italic">
-                  {details.map((item) => (
-                    <div key={item.label}>
-                      <p className="text-xs font-semibold uppercase tracking-widest text-[#888]">
-                        {item.label}
-                      </p>
-                      {item.href ? (
-                        <a href={item.href} className="mt-1 block font-medium text-[#1a1a1a] hover:text-[var(--brand)]">
-                          {item.value}
+              <address className="mt-8 grid gap-5 not-italic sm:mt-10 sm:gap-6">
+                {details.map(({ label, value, href, icon: Icon }) => (
+                  <div key={label} className="flex items-center gap-4">
+                    <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#fff1f1] text-[var(--brand)]">
+                      <Icon aria-hidden className="size-5" strokeWidth={1.8} />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-sm text-[#777]">{label}:</p>
+                      {href ? (
+                        <a
+                          href={href}
+                          className="block break-words text-[17px] font-semibold text-[#1a1a1a] transition hover:text-[var(--brand)]"
+                        >
+                          {value}
                         </a>
                       ) : (
-                        <p className="mt-1 whitespace-pre-line font-medium text-[#1a1a1a]">{item.value}</p>
+                        <p className="text-[17px] font-semibold text-[#1a1a1a]">{value}</p>
                       )}
                     </div>
-                  ))}
-                </address>
-              </div>
-            )}
-
-            <div className="rounded-2xl bg-[#0d0d0d] p-7 text-white">
-              <h2 className="text-lg font-semibold">What happens next</h2>
-              <ol className="mt-5 space-y-5">
-                {nextSteps.map((step, index) => (
-                  <li key={step.title} className="flex gap-4">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--brand)] text-sm font-semibold">
-                      {index + 1}
-                    </span>
-                    <div>
-                      <p className="font-semibold">{step.title}</p>
-                      <p className="mt-0.5 text-sm text-white/65">{step.description}</p>
-                    </div>
-                  </li>
+                  </div>
                 ))}
-              </ol>
-            </div>
-          </aside>
+              </address>
+            )}
+          </div>
+
+          <div>
+            <h2 className="sr-only">Send us a message</h2>
+            <Suspense fallback={<ContactForm menu={serviceMenu} />}>
+              <ContactFormWithParams menu={serviceMenu} />
+            </Suspense>
+          </div>
         </div>
       </section>
     </>

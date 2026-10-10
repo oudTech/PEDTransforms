@@ -2,16 +2,19 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import PostCard from "@/components/blog/PostCard";
+import AnimatedGridPattern from "@/components/ui/animated-grid-pattern";
 import {
   CallToAction,
-  CheckIcon,
   Eyebrow,
+  enter,
   Lifecycle,
   SectionHeading,
-  WhyUsGrid,
+  ValueProposition,
+  WhyUs,
 } from "@/components/sections";
 import { serviceCategories, servicesInCategory } from "@/data/services";
-import { company, images, valueProposition } from "@/data/site";
+import { images } from "@/data/images";
+import { company } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { latestPostsQuery } from "@/sanity/lib/queries";
@@ -36,20 +39,15 @@ export default async function HomePage() {
       <Hero />
       <CoreServices />
       <Approach />
-      <ValueProposition />
-      <section className="bg-[#fafafa] py-20 lg:py-28" aria-labelledby="why-heading">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading
-            id="why-heading"
-            eyebrow="Why PEDTransforms"
-            title="A partner for technology, people and results"
-            intro="We bring together technology, people and strategic expertise, and stay accountable from first conversation to ongoing support."
-          />
-          <div className="mt-12">
-            <WhyUsGrid />
-          </div>
-        </div>
-      </section>
+      <ValueProposition
+        eyebrow="How we help"
+        title="Technology that solves real business problems."
+        intro="Every engagement is designed around measurable value, from modernising processes to managing the technology you depend on."
+      />
+      <WhyUs
+        title="A partner for technology, people and results"
+        intro="We bring together technology, people and strategic expertise, and stay accountable from first conversation to ongoing support."
+      />
       {posts && posts.length > 0 && (
         <section className="bg-white py-20 lg:py-28" aria-labelledby="insights-heading">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -63,7 +61,7 @@ export default async function HomePage() {
                 View all articles →
               </Link>
             </div>
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3">
               {posts.map((post) => (
                 <PostCard key={post._id} post={post} />
               ))}
@@ -71,7 +69,7 @@ export default async function HomePage() {
           </div>
         </section>
       )}
-      <CallToAction />
+      <CallToAction title="Ready to turn technology" accent="into business value?" />
     </>
   );
 }
@@ -80,19 +78,30 @@ function Hero() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-[#fafafa] via-white to-[#fff5f5]">
       <div className="pointer-events-none absolute -right-24 top-0 h-96 w-96 rounded-full bg-[var(--brand)]/[0.06] blur-3xl" />
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:px-8 lg:py-24">
+      <AnimatedGridPattern
+        className="inset-x-0 h-full skew-y-12 text-[var(--brand)] [mask-image:radial-gradient(640px_circle_at_28%_45%,white,transparent)]"
+        lineColor="rgba(0,0,0,0.07)"
+        duration={3}
+        maxOpacity={0.1}
+        numSquares={30}
+      />
+      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:px-8 lg:py-24">
         <div>
-          <Eyebrow>{company.tagline}</Eyebrow>
-          <h1 className="mt-6 text-balance text-4xl font-semibold leading-[1.1] tracking-tight text-[#1a1a1a] sm:text-5xl lg:text-[56px]">
+          <Eyebrow className={enter}>{company.tagline}</Eyebrow>
+          <h1
+            className={`mt-6 text-balance text-4xl font-semibold leading-[1.1] tracking-tight text-[#1a1a1a] sm:text-5xl lg:text-[56px] ${enter} [animation-delay:90ms]`}
+          >
             Turn technology investment into{" "}
             <span className="text-[var(--brand)]">business value</span>
           </h1>
-          <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-[#555]">
+          <p
+            className={`mt-6 max-w-xl text-pretty text-lg leading-relaxed text-[#555] ${enter} [animation-delay:180ms]`}
+          >
             PEDTransforms is a technology and business transformation company. We help
             organisations improve performance, optimise operations and achieve
             sustainable growth through technology, talent and expertise.
           </p>
-          <div className="mt-9 flex flex-wrap gap-3">
+          <div className={`mt-9 flex flex-wrap gap-3 ${enter} [animation-delay:270ms]`}>
             <Link
               href="/services"
               className="rounded-full bg-[var(--brand)] px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--brand-dark)]"
@@ -108,14 +117,18 @@ function Hero() {
           </div>
         </div>
 
-        <div className="relative">
+        <div
+          className={`relative animate-in zoom-in-[0.97] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] fill-mode-both motion-reduce:animate-none [animation-delay:150ms]`}
+        >
           <div className="relative aspect-[5/4] overflow-hidden rounded-3xl shadow-2xl shadow-black/10">
             <Image
-              src={images.hero}
-              alt="Technology team working together on a transformation project"
+              src={images.hero.src}
+              alt={images.hero.alt}
               fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 50vw"
+              placeholder="blur"
+              fetchPriority="high"
+              loading="eager"
+              sizes="(max-width: 1024px) calc(100vw - 32px), 600px"
               className="object-cover"
             />
           </div>
@@ -157,6 +170,7 @@ function CoreServices() {
             <article
               key={category.id}
               id={category.id}
+              data-reveal
               className="flex scroll-mt-28 flex-col rounded-3xl border border-black/[0.06] bg-[#fafafa] p-8"
             >
               <div className="flex items-baseline justify-between">
@@ -208,7 +222,7 @@ function Approach() {
   return (
     <section className="bg-[#0d0d0d] py-20 lg:py-28" aria-labelledby="approach-heading">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl">
+        <div data-reveal className="max-w-3xl">
           <p className="text-sm font-semibold uppercase tracking-widest text-[#ff4d4d]">
             Our approach
           </p>
@@ -227,32 +241,6 @@ function Approach() {
         <div className="mt-12">
           <Lifecycle tone="dark" />
         </div>
-      </div>
-    </section>
-  );
-}
-
-function ValueProposition() {
-  return (
-    <section className="bg-white py-20 lg:py-28" aria-labelledby="value-heading">
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[1fr_1.2fr] lg:px-8">
-        <SectionHeading
-          id="value-heading"
-          eyebrow="How we help"
-          title="Technology that solves real business problems"
-          intro="Every engagement is designed around measurable value. We help organisations to:"
-        />
-        <ul className="grid gap-3 sm:grid-cols-2">
-          {valueProposition.map((item) => (
-            <li
-              key={item}
-              className="flex items-start gap-3 rounded-2xl border border-black/[0.06] bg-[#fafafa] px-5 py-4 text-[15px] font-medium text-[#333]"
-            >
-              <CheckIcon className="mt-0.5" />
-              {item}
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
   );

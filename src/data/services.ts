@@ -21,8 +21,6 @@ export type SubService = {
   headline: string;
   intro: string;
   summary: string;
-  image: string;
-  imageAlt: string;
   challenges: string[];
   capabilities: { title: string; description: string }[];
   outcomes: string[];
@@ -72,9 +70,6 @@ export const subServices: SubService[] = [
       "We help organisations select, procure and implement the technology that modernises how they work, from enterprise software and cloud to data, AI and secure digital processes.",
     summary:
       "Procurement, enterprise software, cloud, cybersecurity, data, AI and process digitisation.",
-    image:
-      "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1400&h=900&fit=crop",
-    imageAlt: "Close-up of a circuit board representing enterprise technology",
     challenges: [
       "Manual, paper-based or disconnected processes slow work down",
       "Uncertainty about which technology or vendor to choose",
@@ -174,9 +169,6 @@ export const subServices: SubService[] = [
       "Technology delivers value only when the right people run it. We recruit specialist technology talent, extend your teams and manage technology operations so your systems keep performing.",
     summary:
       "Talent recruitment, team augmentation, specialist resources and managed technology services.",
-    image:
-      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1400&h=900&fit=crop",
-    imageAlt: "Technology team collaborating around a table",
     challenges: [
       "Hard-to-find technology skills delay critical projects",
       "Internal teams are stretched by day-to-day support",
@@ -271,9 +263,6 @@ export const subServices: SubService[] = [
       "We automate forecourt and fuel operations so retailers and fleet operators can control dispensing, track every litre and monitor stations remotely.",
     summary:
       "Forecourt automation, fuel and fleet management, wetstock and remote station monitoring.",
-    image:
-      "https://images.unsplash.com/photo-1654334036171-e01e52b2ce8e?w=1400&h=900&fit=crop",
-    imageAlt: "Fuel dispenser nozzles at a station forecourt",
     challenges: [
       "Fuel losses that are difficult to detect and explain",
       "Manual tank dips and reconciliations that are slow and error-prone",
@@ -363,9 +352,6 @@ export const subServices: SubService[] = [
       "We connect equipment, applications and data so processes run automatically and decision-makers see what is happening across operations as it happens.",
     summary:
       "IoT and remote monitoring, process automation, systems integration and smart dashboards.",
-    image:
-      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1400&h=900&fit=crop",
-    imageAlt: "Engineer using a tablet to monitor connected equipment",
     challenges: [
       "Systems that do not share data, creating duplicate work",
       "Repetitive manual processes that waste time and cause errors",
@@ -455,9 +441,6 @@ export const subServices: SubService[] = [
       "We help leadership teams decide where technology will create the most value, which solutions to choose and how to improve the processes they support.",
     summary:
       "Transformation strategy, process optimisation, technology selection, IT strategy and procurement advice.",
-    image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1400&h=900&fit=crop",
-    imageAlt: "Advisors and leadership team discussing strategy",
     challenges: [
       "No clear roadmap for digital transformation",
       "Processes that are inefficient or poorly understood",
@@ -552,9 +535,6 @@ export const subServices: SubService[] = [
       "We assess systems, advise on automation and manage technology projects so implementations deliver the results they were approved to achieve.",
     summary:
       "Systems assessment, automation advisory, project management and implementation support.",
-    image:
-      "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=1400&h=900&fit=crop",
-    imageAlt: "Project team planning an implementation on a whiteboard",
     challenges: [
       "Projects that overrun on time or budget",
       "Unclear scope, ownership and milestones",
@@ -644,3 +624,18 @@ export function getCategory(id: ServiceCategoryId) {
 export function servicesInCategory(id: ServiceCategoryId) {
   return subServices.filter((service) => service.category === id);
 }
+
+/** Just what navigation and forms need, so client components can take it as a prop. */
+export type ServiceMenu = {
+  id: ServiceCategoryId;
+  number: string;
+  title: string;
+  services: { slug: string; title: string; summary: string }[];
+}[];
+
+export const serviceMenu: ServiceMenu = serviceCategories.map(({ id, number, title }) => ({
+  id,
+  number,
+  title,
+  services: servicesInCategory(id).map(({ slug, title, summary }) => ({ slug, title, summary })),
+}));

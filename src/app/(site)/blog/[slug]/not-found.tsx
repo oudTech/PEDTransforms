@@ -1,23 +1,19 @@
-import Link from "next/link";
+import { House, Newspaper } from "lucide-react";
+import { Error1 } from "@/components/ui/error1";
+import { popularPages } from "@/data/site";
 
 export default function PostNotFound() {
   return (
-    <section className="mx-auto max-w-xl px-4 py-24 text-center">
-      <p className="text-sm font-semibold uppercase tracking-widest text-[var(--brand)]">
-        404
-      </p>
-      <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[#1a1a1a]">
-        Article not found
-      </h1>
-      <p className="mt-3 text-[#666]">
-        It may have been moved or unpublished.
-      </p>
-      <Link
-        href="/blog"
-        className="mt-8 inline-block rounded-full bg-[var(--brand)] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--brand-dark)]"
-      >
-        Back to the blog
-      </Link>
-    </section>
+    <Error1
+      code="404"
+      heading="Article not found"
+      description="This article may have been moved or unpublished. You can browse our latest insights on the blog."
+      buttons={[
+        { label: "Back to the blog", href: "/blog", icon: Newspaper },
+        { label: "Go home", href: "/", variant: "outline", icon: House },
+      ]}
+      linksLabel="Popular pages"
+      links={popularPages.filter((link) => link.href !== "/blog")}
+    />
   );
 }

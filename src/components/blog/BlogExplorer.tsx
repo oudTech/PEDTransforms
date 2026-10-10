@@ -52,7 +52,7 @@ export default function BlogExplorer({
       <div className="sticky top-[68px] z-30 -mx-4 mb-8 border-b border-black/5 bg-white/85 px-4 py-4 backdrop-blur-md sm:mx-0 sm:rounded-2xl sm:border sm:px-5">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div
-            className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 lg:pb-0"
+            className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-3 [scrollbar-width:thin]"
             role="tablist"
             aria-label="Filter by category"
           >
@@ -113,7 +113,7 @@ export default function BlogExplorer({
       </p>
 
       {shown.length > 0 ? (
-        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 sm:gap-6 xl:grid-cols-3">
           {shown.map((post) => (
             <PostCard key={post._id} post={post} />
           ))}
@@ -171,7 +171,7 @@ function FilterChip({
       onClick={onClick}
       className={`inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${
         active
-          ? "bg-[#1a1a1a] text-white shadow-sm"
+          ? "bg-[var(--brand)] text-white shadow-sm"
           : "bg-[#f4f4f5] text-[#444] hover:bg-[#e9e9eb]"
       }`}
     >

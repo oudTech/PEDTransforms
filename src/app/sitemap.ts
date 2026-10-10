@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { legalLinks } from "@/data/legal";
 import { subServices } from "@/data/services";
 import { absoluteUrl } from "@/lib/seo";
 import { isSanityConfigured } from "@/sanity/env";
@@ -42,6 +43,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
       ...(latestPost ? { lastModified: latestPost } : {}),
     },
+    ...legalLinks.map((link) => ({
+      url: absoluteUrl(link.href),
+      changeFrequency: "yearly" as const,
+      priority: 0.3,
+    })),
   ];
 
   return [

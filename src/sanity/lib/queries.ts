@@ -7,7 +7,7 @@ const postCoreFields = /* groq */ `
   excerpt,
   publishedAt,
   featured,
-  mainImage,
+  mainImage{..., "lqip": asset->metadata.lqip},
   "estimatedReadingTime": round(length(pt::text(body)) / 5 / 200),
   categories[]->{
     _id,
@@ -64,7 +64,8 @@ export const postQuery = defineQuery(`
       ...,
       _type == "image" => {
         ...,
-        "dimensions": asset->metadata.dimensions
+        "dimensions": asset->metadata.dimensions,
+        "lqip": asset->metadata.lqip
       },
       markDefs[]{
         ...

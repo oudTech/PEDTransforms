@@ -1,21 +1,31 @@
+import { Bot, Compass, Layers, UsersRound, type LucideIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import {
   CallToAction,
-  CheckIcon,
   Lifecycle,
   PageHero,
   SectionHeading,
-  WhyUsGrid,
+  ValueProposition,
+  WhyUs,
 } from "@/components/sections";
-import { company, images, mission, valueProposition, vision, whatWeDo } from "@/data/site";
+import HowItWorks01 from "@/components/ui/how-it-works-01";
+import { StackingCards } from "@/components/ui/stacking-card";
+import { images } from "@/data/images";
+import { company, mission, vision, whatWeDo } from "@/data/site";
 import { team } from "@/data/team";
 import { absoluteUrl, organizationId, pageMetadata } from "@/lib/seo";
 
 const description =
   "PEDTransforms is a technology and business transformation company combining technology, talent and expertise to improve performance and drive growth.";
+
+const whatWeDoIcons: Record<string, LucideIcon> = {
+  "Digital Transformation": Layers,
+  "Automation & Smart Systems": Bot,
+  "Consulting & Advisory": Compass,
+  "Technology Talent & Managed Services": UsersRound,
+};
 
 export const metadata: Metadata = pageMetadata({
   title: "About Us",
@@ -64,38 +74,31 @@ export default function AboutPage() {
           </div>
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-xl shadow-black/10">
             <Image
-              src={images.about}
-              alt="PEDTransforms consultants collaborating with a client team"
+              src={images.about.src}
+              alt={images.about.alt}
               fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
+              placeholder="blur"
+              sizes="(max-width: 1024px) calc(100vw - 32px), 600px"
               className="object-cover"
             />
           </div>
         </div>
       </section>
 
-      <section className="bg-[#fafafa] py-20 lg:py-28" aria-labelledby="what-heading">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading id="what-heading" eyebrow="What we do" title="Four capabilities, one partner" />
-          <div className="mt-12 grid gap-5 md:grid-cols-2">
-            {whatWeDo.map((item) => (
-              <Link
-                key={item.title}
-                href={item.href}
-                className="group rounded-2xl border border-black/[0.06] bg-white p-7 transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.3)]"
-              >
-                <h3 className="text-xl font-semibold text-[#1a1a1a] group-hover:text-[var(--brand)]">
-                  {item.title}
-                </h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-[#555]">{item.description}</p>
-                <span className="mt-4 inline-block text-sm font-semibold text-[var(--brand)]">
-                  Learn more <span aria-hidden>→</span>
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      <HowItWorks01
+        id="what-heading"
+        eyebrow="What we do"
+        title="Four capabilities, one partner"
+        intro="Each capability stands on its own, and together they cover the full technology lifecycle, from first advice to ongoing management."
+        className="bg-[#fafafa] lg:py-28"
+        steps={whatWeDo.map((item) => ({
+          icon: whatWeDoIcons[item.title] ?? Layers,
+          title: item.title,
+          body: item.description,
+          href: item.href,
+        }))}
+        cta={{ href: "/services", label: "Explore our services" }}
+      />
 
       <section className="bg-white py-20 lg:py-28" aria-labelledby="approach-heading">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -115,54 +118,48 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-[#0d0d0d] py-20 lg:py-24" aria-label="Vision and mission">
-        <div className="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
-          {[
-            { label: "Our vision", text: vision },
-            { label: "Our mission", text: mission },
-          ].map((item) => (
-            <div key={item.label} className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 lg:p-10">
-              <h2 className="text-sm font-semibold uppercase tracking-widest text-[#ff4d4d]">
-                {item.label}
-              </h2>
-              <p className="mt-4 text-xl font-medium leading-relaxed text-white lg:text-2xl">
-                {item.text}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="bg-white py-20 lg:py-28" aria-labelledby="value-heading">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[1fr_1.2fr] lg:px-8">
-          <SectionHeading
-            id="value-heading"
-            eyebrow="Our value proposition"
-            title="Technology, people and strategic expertise, together"
-            intro="We help organisations to:"
-          />
-          <ul className="grid gap-3 sm:grid-cols-2">
-            {valueProposition.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-3 rounded-2xl border border-black/[0.06] bg-[#fafafa] px-5 py-4 text-[15px] font-medium text-[#333]"
-              >
-                <CheckIcon className="mt-0.5" />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section className="bg-[#fafafa] py-20 lg:py-28" aria-labelledby="why-heading">
+      <section className="bg-[#fafafa] pt-20 lg:pt-28" aria-labelledby="purpose-heading">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading id="why-heading" eyebrow="Why PEDTransforms" title="What sets us apart" />
-          <div className="mt-12">
-            <WhyUsGrid />
-          </div>
+          <SectionHeading
+            id="purpose-heading"
+            eyebrow="Our purpose"
+            title="Vision and mission"
+            align="center"
+          />
         </div>
+        <StackingCards
+          className="-mb-[10vh] md:-mt-[8vh]"
+          items={[
+            {
+              label: "Our vision",
+              text: vision,
+              image: images.vision.src,
+              imageAlt: images.vision.alt,
+              color: "#f3eee9",
+              href: "/contact",
+              linkLabel: "Work with us",
+            },
+            {
+              label: "Our mission",
+              text: mission,
+              image: images.mission.src,
+              imageAlt: images.mission.alt,
+              color: "#16181d",
+              tone: "dark",
+              href: "/services",
+              linkLabel: "Explore our services",
+            },
+          ]}
+        />
       </section>
+
+      <ValueProposition
+        eyebrow="Our value proposition"
+        title="Technology, people and strategic expertise, together."
+        intro="We combine all three so organisations can modernise, automate, scale and decide with confidence."
+      />
+
+      <WhyUs title="What sets us apart" />
 
       {team.length > 0 && (
         <section className="bg-white py-20 lg:py-28" aria-labelledby="team-heading">
@@ -172,7 +169,7 @@ export default function AboutPage() {
               eyebrow="Our team"
               title="The people behind PEDTransforms"
             />
-            <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <ul className="mt-12 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
               {team.map((member) => (
                 <li key={member.name} className="overflow-hidden rounded-2xl border border-black/[0.06] bg-white">
                   <div className="relative aspect-[4/5] bg-[#f4f4f5]">
@@ -181,7 +178,7 @@ export default function AboutPage() {
                         src={member.photo}
                         alt={`${member.name}, ${member.role}`}
                         fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        sizes="(max-width: 1024px) 50vw, 25vw"
                         className="object-cover"
                       />
                     ) : (
@@ -190,11 +187,11 @@ export default function AboutPage() {
                       </span>
                     )}
                   </div>
-                  <div className="p-5">
-                    <h3 className="text-lg font-semibold text-[#1a1a1a]">{member.name}</h3>
-                    <p className="text-sm text-[var(--brand)]">{member.role}</p>
+                  <div className="p-3.5 sm:p-5">
+                    <h3 className="text-sm font-semibold text-[#1a1a1a] sm:text-lg">{member.name}</h3>
+                    <p className="text-xs text-[var(--brand)] sm:text-sm">{member.role}</p>
                     {member.bio && (
-                      <p className="mt-2 text-sm leading-relaxed text-[#555]">{member.bio}</p>
+                      <p className="mt-2 text-[13px] leading-relaxed text-[#555] sm:text-sm">{member.bio}</p>
                     )}
                     {member.linkedin && (
                       <a

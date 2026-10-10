@@ -19,6 +19,8 @@ const smartsupp = /^(true|1|on|yes)$/i.test(process.env.SMARTSUPP_ENABLED?.trim(
         "wss://*.smartsupp.com",
         "https://*.smartsuppchat.com",
         "https://*.smartsuppcdn.com",
+        // Emoji data for the chat box's emoji picker.
+        "https://cdn.jsdelivr.net/npm/@emoji-mart/",
       ],
       frame: ["https://*.smartsupp.com", "https://*.smartsuppchat.com", "https://*.smartsuppcdn.com"],
     }
@@ -41,7 +43,6 @@ const siteCsp = csp({
     "data:",
     "blob:",
     "https://cdn.sanity.io",
-    "https://images.unsplash.com",
     ...smartsupp.img,
   ],
   "font-src": ["'self'", ...smartsupp.font],
@@ -93,10 +94,9 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],
-    remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
-      { protocol: "https", hostname: "cdn.sanity.io", pathname: sanityImagePath },
-    ],
+    // Sanity asset URLs are content-addressed, so optimised copies never go stale.
+    minimumCacheTTL: 2678400,
+    remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io", pathname: sanityImagePath }],
   },
   async headers() {
     const noIndex = { key: "X-Robots-Tag", value: "noindex, nofollow" };

@@ -15,7 +15,7 @@ import { absoluteUrl, organizationId, pageMetadata } from "@/lib/seo";
 import { isSanityConfigured } from "@/sanity/env";
 import { client } from "@/sanity/lib/client";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { urlFor } from "@/sanity/lib/image";
+import { blurProps, urlFor } from "@/sanity/lib/image";
 import { postQuery, postSlugsQuery } from "@/sanity/lib/queries";
 import type { Post } from "@/sanity/lib/types";
 
@@ -163,7 +163,9 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
                   src={urlFor(post.mainImage).width(2000).height(1000).url()}
                   alt={post.mainImage.alt || post.title}
                   fill
-                  priority
+                  fetchPriority="high"
+                  loading="eager"
+                  {...blurProps(post.mainImage)}
                   sizes="(max-width: 1280px) 100vw, 1152px"
                   className="object-cover"
                 />
@@ -248,7 +250,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
                 View all →
               </Link>
             </div>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3">
               {post.related.map((related) => (
                 <PostCard key={related._id} post={related} />
               ))}

@@ -94,7 +94,16 @@ export function organizationJsonLd() {
     logo: absoluteUrl("/logo-light.png"),
     description: company.description,
     slogan: company.tagline,
-    ...(contact.address ? { address: contact.address } : {}),
+    ...(contact.address
+      ? {
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: contact.locality,
+            addressRegion: contact.region,
+            addressCountry: contact.countryCode,
+          },
+        }
+      : {}),
     ...(contactPoint ? { contactPoint } : {}),
     ...(socialProfiles.length ? { sameAs: socialProfiles } : {}),
   };

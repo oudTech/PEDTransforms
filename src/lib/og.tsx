@@ -40,7 +40,7 @@ export async function renderOgImage({
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={logoSrc} alt={company.name} width={336} height={84} />
+        <img src={logoSrc} alt={company.name} width={287} height={84} />
         <div style={{ display: "flex", flexDirection: "column" }}>
           {eyebrow && (
             <div

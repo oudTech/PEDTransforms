@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
 import ServiceCard from "@/components/ServiceCard";
 import { CallToAction, CheckIcon, PageHero, SectionHeading } from "@/components/sections";
+import { serviceImage } from "@/data/images";
 import { getCategory, getSubService, subServices } from "@/data/services";
 import { absoluteUrl, organizationId, pageMetadata } from "@/lib/seo";
 
@@ -38,6 +39,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
     .map((relatedSlug) => getSubService(relatedSlug))
     .filter((item) => item !== undefined);
   const url = absoluteUrl(`/services/${service.slug}`);
+  const image = serviceImage(service.slug);
 
   return (
     <>
@@ -52,7 +54,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
             category: category.title,
             description: service.metaDescription,
             url,
-            image: service.image,
+            image: absoluteUrl(image.src.src),
             provider: { "@id": organizationId },
             hasOfferCatalog: {
               "@type": "OfferCatalog",
@@ -126,11 +128,11 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           </div>
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-xl shadow-black/10">
             <Image
-              src={service.image}
-              alt={service.imageAlt}
+              src={image.src}
+              alt={image.alt}
               fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 50vw"
+              placeholder="blur"
+              sizes="(max-width: 1024px) calc(100vw - 32px), 600px"
               className="object-cover"
             />
           </div>
@@ -148,14 +150,14 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
             eyebrow="What we deliver"
             title={`Our ${service.title.toLowerCase()} capabilities`}
           />
-          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-12 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
             {service.capabilities.map((capability, index) => (
-              <li key={capability.title} className="rounded-2xl border border-black/[0.06] bg-white p-7">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#fff1f1] text-sm font-bold text-[var(--brand)]">
+              <li key={capability.title} className="rounded-xl border border-black/[0.06] bg-white p-4 sm:rounded-2xl sm:p-7">
+                <span className="flex size-8 items-center justify-center rounded-lg bg-[#fff1f1] text-xs font-bold text-[var(--brand)] sm:size-10 sm:rounded-xl sm:text-sm">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-5 text-lg font-semibold text-[#1a1a1a]">{capability.title}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-[#555]">{capability.description}</p>
+                <h3 className="mt-3 text-sm font-semibold leading-snug text-[#1a1a1a] sm:mt-5 sm:text-lg">{capability.title}</h3>
+                <p className="mt-1.5 text-[13px] leading-relaxed text-[#555] sm:mt-2 sm:text-[15px]">{capability.description}</p>
               </li>
             ))}
           </ul>
@@ -230,7 +232,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
                 All services →
               </Link>
             </div>
-            <div className="mt-10 grid gap-6 sm:grid-cols-2">
+            <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-6">
               {related.map((item) => (
                 <ServiceCard key={item.slug} service={item} />
               ))}
