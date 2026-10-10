@@ -40,7 +40,7 @@ export function LegalPage({
       <PageHero breadcrumbs={[{ name: title, path }]} eyebrow="Legal" title={title} intro={intro} />
 
       <div className="bg-white py-16 lg:py-20">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[240px_1fr] lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-12 px-4 sm:px-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:px-8">
           <aside className="lg:sticky lg:top-28 lg:self-start">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#888]">
               Last updated
@@ -65,7 +65,7 @@ export function LegalPage({
             </nav>
           </aside>
 
-          <article className="max-w-3xl text-[15px] leading-relaxed text-[#444] [&_a]:font-medium [&_a]:text-[var(--brand)] [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold [&_strong]:text-[#1a1a1a]">
+          <article className="min-w-0 max-w-3xl text-[15px] leading-relaxed text-[#444] [&_a]:font-medium [&_a]:text-[var(--brand)] [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold [&_strong]:text-[#1a1a1a]">
             {children}
           </article>
         </div>

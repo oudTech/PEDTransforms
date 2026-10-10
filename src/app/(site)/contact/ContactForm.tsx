@@ -85,7 +85,7 @@ export default function ContactForm({
     <form
       action={formAction}
       noValidate
-      className="space-y-5 rounded-2xl border border-black/[0.06] bg-[#fafafa] p-5 sm:p-8"
+      className="relative min-w-0 space-y-5 rounded-2xl border border-black/[0.06] bg-[#fafafa] p-5 sm:p-8"
     >
       {state.status === "error" && (
         <p role="alert" className="rounded-lg bg-[#fff1f1] px-4 py-3 text-sm font-medium text-[var(--brand-dark)]">
@@ -136,7 +136,7 @@ export default function ContactForm({
         />
       </Field>
 
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-5 sm:grid-cols-2">
         <Field id="company" label="Organisation" error={fieldError("company")}>
           <input
             {...fieldProps("company")}
@@ -151,7 +151,7 @@ export default function ContactForm({
             <select
               {...fieldProps("service")}
               defaultValue={value("service") ?? defaultService}
-              className={`${fieldProps("service").className} appearance-none pr-10`}
+              className={`${fieldProps("service").className} min-w-0 appearance-none truncate pr-10`}
             >
               <option value="general">General enquiry</option>
               {menu.map((category) => (
@@ -223,7 +223,7 @@ function Field({
   children: ReactNode;
 }) {
   return (
-    <div>
+    <div className="min-w-0">
       <label htmlFor={`contact-${id}`} className="mb-1.5 block text-sm font-medium text-[#333]">
         {label}
         {required && <span className="text-[var(--brand)]">*</span>}

@@ -1,6 +1,7 @@
 import { Bot, Compass, Layers, UsersRound, type LucideIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
+import AboutShowcase from "@/components/AboutShowcase";
 import JsonLd from "@/components/JsonLd";
 import {
   CallToAction,
@@ -55,7 +56,7 @@ export default function AboutPage() {
       />
 
       <section className="bg-white py-20 lg:py-28" aria-labelledby="who-heading">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8">
           <div>
             <SectionHeading id="who-heading" eyebrow="Who we are" title="A technology transformation partner" />
             <div className="mt-6 space-y-4 text-[17px] leading-relaxed text-[#444]">
@@ -72,16 +73,10 @@ export default function AboutPage() {
               </p>
             </div>
           </div>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-xl shadow-black/10">
-            <Image
-              src={images.about.src}
-              alt={images.about.alt}
-              fill
-              placeholder="blur"
-              sizes="(max-width: 1024px) calc(100vw - 32px), 600px"
-              className="object-cover"
-            />
-          </div>
+          <AboutShowcase
+            image={images.about}
+            capabilities={whatWeDo.length}
+          />
         </div>
       </section>
 

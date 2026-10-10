@@ -19,46 +19,46 @@ export type SiteImage = { src: StaticImageData; alt: string };
 export const images = {
   hero: {
     src: hero,
-    alt: "Two technology professionals working together at a computer",
+    alt: "Business professionals in discussion around a conference room table",
   },
   about: {
     src: about,
-    alt: "PEDTransforms consultants reviewing a solution with a client team",
+    alt: "Black-and-white photo of a group of people raising their hands together",
   },
   vision: {
     src: vision,
-    alt: "City lights across the Earth at night, seen from orbit",
+    alt: "Modern glass office towers rising into a clear blue sky",
   },
   mission: {
     src: mission,
-    alt: "Technology specialist with a tablet in a data centre",
+    alt: "Team gathered around a table during a meeting",
   },
 } satisfies Record<string, SiteImage>;
 
 const serviceImages: Record<string, SiteImage> = {
   "technology-digital-solutions": {
     src: technologyDigital,
-    alt: "Illuminated circuit board display representing enterprise technology",
+    alt: "Developers reviewing code together on a laptop and monitor",
   },
   "technology-talent-managed-services": {
     src: talentManaged,
-    alt: "Technology specialists monitoring systems in an operations room",
+    alt: "Engineers in hard hats and high-visibility uniforms",
   },
   "forecourt-fuel-automation": {
     src: forecourtFuel,
-    alt: "Fuel dispenser nozzles at a station forecourt",
+    alt: "Brightly lit fuel station forecourt at night",
   },
   "smart-systems-integration": {
     src: smartSystems,
-    alt: "Robotic arms working on an automated production line",
+    alt: "Operator monitoring connected systems from an operations centre",
   },
   "business-technology-advisory": {
     src: businessAdvisory,
-    alt: "Analytics dashboard showing business performance data",
+    alt: "Advisory session around a boardroom table",
   },
   "project-implementation-advisory": {
     src: projectAdvisory,
-    alt: "Project team in a briefing reviewing an implementation plan",
+    alt: "Project team working through a plan in a large meeting room",
   },
 };
 

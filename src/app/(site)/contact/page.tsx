@@ -53,8 +53,8 @@ export default function ContactPage() {
       />
 
       <section className="bg-white py-14 sm:py-20 lg:py-24" aria-labelledby="contact-heading">
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_1.25fr] lg:gap-16 lg:px-8">
-          <div className="lg:pt-4">
+        <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] lg:gap-16 lg:px-8">
+          <div className="min-w-0 lg:pt-4">
             <h2
               id="contact-heading"
               className="text-balance text-[2rem] font-semibold leading-[1.1] tracking-tight text-[#1a1a1a] sm:text-5xl"
@@ -78,7 +78,7 @@ export default function ContactPage() {
                       {href ? (
                         <a
                           href={href}
-                          className="block break-words text-[17px] font-semibold text-[#1a1a1a] transition hover:text-[var(--brand)]"
+                          className="block break-words text-[17px] font-semibold text-[var(--brand)] transition hover:text-[var(--brand-dark)] hover:underline hover:underline-offset-4"
                         >
                           {value}
                         </a>
@@ -92,7 +92,7 @@ export default function ContactPage() {
             )}
           </div>
 
-          <div>
+          <div className="min-w-0">
             <h2 className="sr-only">Send us a message</h2>
             <Suspense fallback={<ContactForm menu={serviceMenu} />}>
               <ContactFormWithParams menu={serviceMenu} />
