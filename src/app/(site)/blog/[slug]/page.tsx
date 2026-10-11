@@ -147,7 +147,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
               {post.title}
             </h1>
             {post.excerpt && (
-              <p className="mx-auto mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-[#555]">
+              <p className="mx-auto mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-[#1f1f1f]">
                 {post.excerpt}
               </p>
             )}
@@ -213,7 +213,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
                     <p className="text-sm text-[var(--brand)]">{post.author.role}</p>
                   )}
                   {post.author.bio && (
-                    <p className="mt-2 text-sm leading-relaxed text-[#555]">
+                    <p className="mt-2 text-sm leading-relaxed text-[#1f1f1f]">
                       {post.author.bio}
                     </p>
                   )}

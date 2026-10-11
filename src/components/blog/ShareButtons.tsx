@@ -38,7 +38,7 @@ export default function ShareButtons({ url, title }: { url: string; title: strin
   }
 
   const buttonClass =
-    "flex h-10 w-10 items-center justify-center rounded-full border border-black/10 text-[#555] transition hover:border-[var(--brand)] hover:bg-[var(--brand)] hover:text-white";
+    "flex h-10 w-10 items-center justify-center rounded-full border border-black/10 text-[#1f1f1f] transition hover:border-[var(--brand)] hover:bg-[var(--brand)] hover:text-white";
 
   return (
     <div className="flex items-center gap-2">

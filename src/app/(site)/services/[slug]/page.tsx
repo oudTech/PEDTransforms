@@ -150,14 +150,14 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
             eyebrow="What we deliver"
             title={`Our ${service.title.toLowerCase()} capabilities`}
           />
-          <ul className="mt-12 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
+          <ul className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
             {service.capabilities.map((capability, index) => (
-              <li key={capability.title} className="rounded-xl border border-black/[0.06] bg-white p-4 sm:rounded-2xl sm:p-7">
-                <span className="flex size-8 items-center justify-center rounded-lg bg-[#fff1f1] text-xs font-bold text-[var(--brand)] sm:size-10 sm:rounded-xl sm:text-sm">
+              <li key={capability.title} className="rounded-2xl border border-black/[0.06] bg-white p-5 sm:p-7">
+                <span className="flex size-9 items-center justify-center rounded-lg bg-[#fff1f1] text-xs font-bold text-[var(--brand)] sm:size-10 sm:rounded-xl sm:text-sm">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-3 text-sm font-semibold leading-snug text-[#1a1a1a] sm:mt-5 sm:text-lg">{capability.title}</h3>
-                <p className="mt-1.5 text-[13px] leading-relaxed text-[#555] sm:mt-2 sm:text-[15px]">{capability.description}</p>
+                <h3 className="mt-4 text-base font-semibold leading-snug text-[#1a1a1a] sm:mt-5 sm:text-lg">{capability.title}</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-[#1f1f1f] sm:mt-2 sm:text-[15px]">{capability.description}</p>
               </li>
             ))}
           </ul>
@@ -179,18 +179,39 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           </div>
           <div>
             <SectionHeading eyebrow="How we deliver" title="A clear, structured process" />
-            <ol className="mt-8 space-y-4">
-              {service.process.map((step, index) => (
-                <li key={step.title} className="flex gap-4 rounded-2xl border border-black/[0.06] bg-[#fafafa] p-5">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1a1a1a] text-sm font-semibold text-white">
-                    {index + 1}
-                  </span>
-                  <div>
-                    <h3 className="font-semibold text-[#1a1a1a]">{step.title}</h3>
-                    <p className="mt-0.5 text-sm text-[#555]">{step.description}</p>
-                  </div>
-                </li>
-              ))}
+            <ol className="mt-8 grid grid-cols-2 gap-3 sm:gap-4">
+              {service.process.map((step, index) => {
+                const number = String(index + 1).padStart(2, "0");
+                return (
+                  <li
+                    key={step.title}
+                    data-reveal
+                    className="group relative flex flex-col overflow-hidden rounded-2xl border border-black/[0.06] bg-gradient-to-b from-white to-[#fafafa] p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition duration-300 odd:last:col-span-2 hover:-translate-y-0.5 hover:border-[var(--brand)]/20 hover:shadow-[0_20px_40px_-24px_rgba(189,0,0,0.35)] sm:p-6"
+                  >
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute -right-1 -top-2 select-none text-[56px] font-bold leading-none tracking-tighter text-black/[0.04] transition group-hover:text-[var(--brand)]/[0.08] sm:-top-3 sm:text-[80px]"
+                    >
+                      {number}
+                    </span>
+                    <span className="inline-flex w-fit items-center rounded-full bg-[#fff1f1] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--brand)] sm:text-[11px]">
+                      Step {number}
+                    </span>
+                    <h3 className="mt-4 text-base font-semibold leading-snug text-[#1a1a1a] sm:mt-5 sm:text-lg">
+                      {step.title}
+                    </h3>
+                    <p className="mt-1.5 text-[13px] leading-relaxed text-[#1f1f1f] sm:text-sm">{step.description}</p>
+                    <div aria-hidden className="mt-auto flex gap-1 pt-5">
+                      {service.process.map((other, position) => (
+                        <span
+                          key={other.title}
+                          className={`h-1 flex-1 rounded-full ${position <= index ? "bg-[var(--brand)]" : "bg-black/[0.07]"}`}
+                        />
+                      ))}
+                    </div>
+                  </li>
+                );
+              })}
             </ol>
           </div>
         </div>
@@ -216,7 +237,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
                     +
                   </span>
                 </summary>
-                <p className="mt-3 text-[15px] leading-relaxed text-[#555]">{faq.answer}</p>
+                <p className="mt-3 text-[15px] leading-relaxed text-[#1f1f1f]">{faq.answer}</p>
               </details>
             ))}
           </div>

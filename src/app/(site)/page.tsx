@@ -95,7 +95,7 @@ function Hero() {
             <span className="text-[var(--brand)]">business value</span>
           </h1>
           <p
-            className={`mt-6 max-w-xl text-pretty text-lg leading-relaxed text-[#555] ${enter} [animation-delay:180ms]`}
+            className={`mt-6 max-w-xl text-pretty text-lg leading-relaxed text-[#1f1f1f] ${enter} [animation-delay:180ms]`}
           >
             PEDTransforms is a technology and business transformation company. We help
             organisations improve performance, optimise operations and achieve
@@ -184,7 +184,7 @@ function CoreServices() {
               <h3 className="mt-6 text-2xl font-semibold tracking-tight text-[#1a1a1a]">
                 {category.title}
               </h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-[#555]">{category.summary}</p>
+              <p className="mt-3 text-[15px] leading-relaxed text-[#1f1f1f]">{category.summary}</p>
               <ul className="mt-6 space-y-3">
                 {servicesInCategory(category.id).map((service) => (
                   <li key={service.slug}>

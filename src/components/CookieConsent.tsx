@@ -36,7 +36,7 @@ export default function CookieConsent({ liveChat }: { liveChat: boolean }) {
           <h2 id={titleId} className="text-base font-semibold">
             Cookies on this website
           </h2>
-          <p className="mt-1.5 text-sm leading-relaxed text-[#555]">
+          <p className="mt-1.5 text-sm leading-relaxed text-[#1f1f1f]">
             {liveChat
               ? "PEDTransforms uses strictly necessary cookies to run this site. If you accept, we also load our Smartsupp live chat and its cookies. If you reject, you can still start a chat yourself with the chat button. "
               : "PEDTransforms uses only strictly necessary cookies to run this site and remember your choice. "}

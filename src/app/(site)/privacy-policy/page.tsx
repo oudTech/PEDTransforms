@@ -31,6 +31,7 @@ const sections = [
 
 export default function PrivacyPolicyPage() {
   const liveChat = Boolean(serverEnv.smartsuppKey);
+  const botCheck = Boolean(serverEnv.turnstile);
   const email = <a href={`mailto:${legal.privacyEmail}`}>{legal.privacyEmail}</a>;
   const section = (id: string) => sectionProps(sections, id);
 
@@ -126,8 +127,16 @@ export default function PrivacyPolicyPage() {
             data.
           </li>
           <li>
-            <strong>Resend</strong> (United States) delivers contact form submissions to our inbox.
+            <strong>Resend</strong> (United States) delivers contact form submissions to our inbox and
+            sends you a confirmation that we received your enquiry.
           </li>
+          {botCheck && (
+            <li>
+              <strong>Cloudflare, Inc.</strong> (United States) runs the Turnstile security check on our
+              contact form, which processes technical data such as your IP address and browser signals to
+              tell people apart from automated spam.
+            </li>
+          )}
           <li>
             <strong>Our business email provider</strong> stores the enquiries and emails we receive.
           </li>

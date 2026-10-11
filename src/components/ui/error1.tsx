@@ -62,7 +62,7 @@ export function Error1({
         )}
 
         {description && (
-          <p className="mx-auto mt-4 max-w-xl text-pretty text-base leading-relaxed text-[#555] md:text-lg">
+          <p className="mx-auto mt-4 max-w-xl text-pretty text-base leading-relaxed text-[#1f1f1f] md:text-lg">
             {description}
           </p>
         )}

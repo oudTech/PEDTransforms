@@ -58,7 +58,7 @@ export default function HowItWorks01({
 
         <ol
           className={cn(
-            "mt-12 grid grid-cols-2 gap-3 sm:mt-14 sm:gap-6",
+            "mt-12 grid grid-cols-1 gap-4 sm:mt-14 sm:grid-cols-2 sm:gap-6",
             steps.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4",
           )}
         >
@@ -66,7 +66,7 @@ export default function HowItWorks01({
             <li
               key={step.title}
               data-reveal
-              className="group relative flex flex-col gap-2.5 rounded-xl border border-border bg-card p-4 shadow-sm shadow-black/5 transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.3)] sm:gap-3 sm:rounded-2xl sm:p-6"
+              className="group relative flex flex-col gap-2.5 rounded-2xl border border-border bg-card p-5 shadow-sm shadow-black/5 transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.3)] sm:gap-3 sm:p-6"
             >
               <div className="flex items-center justify-between">
                 <span className="grid size-9 place-items-center rounded-lg bg-[#fff1f1] text-[var(--brand)] transition-colors group-hover:bg-[var(--brand)] group-hover:text-white sm:size-10 sm:rounded-xl">
@@ -85,9 +85,9 @@ export default function HowItWorks01({
                   step.title
                 )}
               </h3>
-              <p className="text-[13px] leading-relaxed text-muted-foreground sm:text-sm">{step.body}</p>
+              <p className="text-sm leading-relaxed text-muted-foreground">{step.body}</p>
               {step.href && (
-                <span className="mt-auto pt-2 text-xs font-semibold text-[var(--brand)] sm:text-sm">
+                <span className="mt-auto pt-2 text-sm font-semibold text-[var(--brand)]">
                   Learn more
                   <span className="ml-1 inline-block transition group-hover:translate-x-1" aria-hidden>
                     →

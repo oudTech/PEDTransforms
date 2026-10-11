@@ -27,7 +27,18 @@ function flag(name: string) {
   return /^(true|1|on|yes)$/i.test(process.env[name]?.trim() ?? "");
 }
 
+const turnstileSiteKey = read("TURNSTILE_SITE_KEY", z.string().regex(/^[\w-]{10,100}$/));
+const turnstileSecretKey = read("TURNSTILE_SECRET_KEY", z.string().regex(/^[\w-]{10,200}$/));
+if (Boolean(turnstileSiteKey) !== Boolean(turnstileSecretKey)) {
+  console.error("[env] Set both TURNSTILE_SITE_KEY and TURNSTILE_SECRET_KEY to enable the contact form bot check.");
+}
+
 export const serverEnv = {
+  /** Both Cloudflare Turnstile keys, or undefined when the bot check is off. */
+  turnstile:
+    turnstileSiteKey && turnstileSecretKey
+      ? { siteKey: turnstileSiteKey, secretKey: turnstileSecretKey }
+      : undefined,
   smartsuppKey: flag("SMARTSUPP_ENABLED")
     ? read("SMARTSUPP_KEY", z.string().regex(/^[a-f0-9]{40}$/i))
     : undefined,

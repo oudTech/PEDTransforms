@@ -23,7 +23,7 @@ export default function ServiceCard({ service }: { service: SubService }) {
             {service.title}
           </Link>
         </h3>
-        <p className="mt-1.5 line-clamp-4 text-xs leading-relaxed text-[#555] sm:mt-2 sm:line-clamp-none sm:text-sm">
+        <p className="mt-1.5 line-clamp-4 text-xs leading-relaxed text-[#1f1f1f] sm:mt-2 sm:line-clamp-none sm:text-sm">
           {service.summary}
         </p>
         <span className="mt-auto pt-3 text-xs font-semibold text-[var(--brand)] sm:pt-5 sm:text-sm">

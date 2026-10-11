@@ -106,7 +106,7 @@ export default function AboutPage() {
           <div className="mt-12">
             <Lifecycle />
           </div>
-          <p className="mt-6 max-w-3xl text-[15px] leading-relaxed text-[#555]">
+          <p className="mt-6 max-w-3xl text-[15px] leading-relaxed text-[#1f1f1f]">
             This means we support clients not only when they purchase or implement technology,
             but also when they need the expertise and ongoing support to get full value from it.
           </p>
@@ -186,7 +186,7 @@ export default function AboutPage() {
                     <h3 className="text-sm font-semibold text-[#1a1a1a] sm:text-lg">{member.name}</h3>
                     <p className="text-xs text-[var(--brand)] sm:text-sm">{member.role}</p>
                     {member.bio && (
-                      <p className="mt-2 text-[13px] leading-relaxed text-[#555] sm:text-sm">{member.bio}</p>
+                      <p className="mt-2 text-[13px] leading-relaxed text-[#1f1f1f] sm:text-sm">{member.bio}</p>
                     )}
                     {member.linkedin && (
                       <a

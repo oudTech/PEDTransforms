@@ -26,6 +26,12 @@ const smartsupp = /^(true|1|on|yes)$/i.test(process.env.SMARTSUPP_ENABLED?.trim(
     }
   : { script: [], style: [], img: [], font: [], media: [], connect: [], frame: [] };
 
+// https://developers.cloudflare.com/turnstile/reference/content-security-policy/
+const turnstile =
+  process.env.TURNSTILE_SITE_KEY?.trim() && process.env.TURNSTILE_SECRET_KEY?.trim()
+    ? ["https://challenges.cloudflare.com"]
+    : [];
+
 function csp(directives: Record<string, string[]>) {
   return Object.entries(directives)
     .map(([name, values]) => [name, ...values].join(" ").trim())
@@ -36,7 +42,13 @@ function csp(directives: Record<string, string[]>) {
 // 'unsafe-inline' for the framework's inline bootstrap scripts.
 const siteCsp = csp({
   "default-src": ["'self'"],
-  "script-src": ["'self'", "'unsafe-inline'", ...(isDev ? ["'unsafe-eval'"] : []), ...smartsupp.script],
+  "script-src": [
+    "'self'",
+    "'unsafe-inline'",
+    ...(isDev ? ["'unsafe-eval'"] : []),
+    ...smartsupp.script,
+    ...turnstile,
+  ],
   "style-src": ["'self'", "'unsafe-inline'", ...smartsupp.style],
   "img-src": [
     "'self'",
@@ -47,7 +59,7 @@ const siteCsp = csp({
   ],
   "font-src": ["'self'", ...smartsupp.font],
   "connect-src": ["'self'", "https://*.sanity.io", "wss://*.sanity.io", ...smartsupp.connect],
-  "frame-src": ["'self'", ...smartsupp.frame],
+  "frame-src": ["'self'", ...smartsupp.frame, ...turnstile],
   "media-src": ["'self'", ...smartsupp.media],
   "worker-src": ["'self'", "blob:"],
   "object-src": ["'none'"],

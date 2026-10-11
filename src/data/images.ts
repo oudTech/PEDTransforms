@@ -31,18 +31,18 @@ export const images = {
   },
   mission: {
     src: mission,
-    alt: "Team gathered around a table during a meeting",
+    alt: "Top-down view of a team meeting around a wooden table with a laptop and tablet",
   },
 } satisfies Record<string, SiteImage>;
 
 const serviceImages: Record<string, SiteImage> = {
   "technology-digital-solutions": {
     src: technologyDigital,
-    alt: "Developers reviewing code together on a laptop and monitor",
+    alt: "Glowing teal LED circuit panel",
   },
   "technology-talent-managed-services": {
     src: talentManaged,
-    alt: "Engineers in hard hats and high-visibility uniforms",
+    alt: "Team seated around a long conference table in a bright office",
   },
   "forecourt-fuel-automation": {
     src: forecourtFuel,
@@ -58,7 +58,7 @@ const serviceImages: Record<string, SiteImage> = {
   },
   "project-implementation-advisory": {
     src: projectAdvisory,
-    alt: "Project team working through a plan in a large meeting room",
+    alt: "Project team gathered around a laptop reviewing a plan together",
   },
 };
 

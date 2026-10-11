@@ -38,7 +38,7 @@ export function Features({
           >
             {title}
           </h2>
-          {intro && <p className="mt-5 text-pretty text-lg leading-relaxed text-[#555]">{intro}</p>}
+          {intro && <p className="mt-5 text-pretty text-lg leading-relaxed text-[#1f1f1f]">{intro}</p>}
         </div>
 
         <ul className="relative mx-auto grid max-w-2xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-black/[0.07] bg-black/[0.07] lg:max-w-none lg:grid-cols-3">
@@ -54,7 +54,7 @@ export function Features({
                 </span>
                 <h3 className="text-sm font-semibold leading-snug text-[#1a1a1a] sm:text-base">{itemTitle}</h3>
               </div>
-              <p className="text-[13px] leading-relaxed text-[#555] sm:text-[15px]">{description}</p>
+              <p className="text-[13px] leading-relaxed text-[#1f1f1f] sm:text-[15px]">{description}</p>
             </li>
           ))}
         </ul>

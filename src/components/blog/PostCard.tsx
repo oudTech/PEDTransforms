@@ -41,7 +41,7 @@ export default function PostCard({ post }: { post: PostCardType }) {
           </Link>
         </h3>
         {post.excerpt && (
-          <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-[#555] max-sm:hidden">
+          <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-[#1f1f1f] max-sm:hidden">
             {post.excerpt}
           </p>
         )}

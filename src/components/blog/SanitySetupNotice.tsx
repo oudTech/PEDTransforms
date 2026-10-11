@@ -55,7 +55,7 @@ export default function SanitySetupNotice() {
       <h2 className="mt-4 text-2xl font-semibold tracking-tight text-[#1a1a1a]">
         Connect Sanity to power the blog
       </h2>
-      <p className="mt-2 text-[#555]">
+      <p className="mt-2 text-[#1f1f1f]">
         The blog reads its content from Sanity. Every credential is loaded from{" "}
         <code className="rounded bg-[#f4f4f5] px-1.5 py-0.5 text-sm">.env.local</code>
         ; see <code className="rounded bg-[#f4f4f5] px-1.5 py-0.5 text-sm">.env.example</code>{" "}
@@ -67,7 +67,7 @@ export default function SanitySetupNotice() {
             <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[var(--brand)] text-sm font-semibold text-white">
               {index + 1}
             </span>
-            <div className="text-sm leading-relaxed text-[#555] [&_code]:rounded [&_code]:bg-[#f4f4f5] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-[13px] [&_code]:text-[#1a1a1a]">
+            <div className="text-sm leading-relaxed text-[#1f1f1f] [&_code]:rounded [&_code]:bg-[#f4f4f5] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-[13px] [&_code]:text-[#1a1a1a]">
               <p className="font-semibold text-[#1a1a1a]">{step.title}</p>
               <p className="mt-0.5">{step.body}</p>
             </div>

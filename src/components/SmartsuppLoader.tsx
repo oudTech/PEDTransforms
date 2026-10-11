@@ -150,7 +150,7 @@ function ChatPrompt({ onStart }: { onStart: () => void }) {
               <X aria-hidden className="size-4" />
             </button>
           </div>
-          <p className="mt-1.5 text-sm leading-relaxed text-[#555]">
+          <p className="mt-1.5 text-sm leading-relaxed text-[#1f1f1f]">
             Our live chat is provided by Smartsupp. Starting a chat loads it and sets the cookies it needs
             to keep your conversation going. See our{" "}
             <Link href="/cookie-policy" className="font-medium text-[var(--brand)] underline underline-offset-2">

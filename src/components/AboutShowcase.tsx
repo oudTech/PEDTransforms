@@ -106,7 +106,7 @@ export default function AboutShowcase({
           </p>
         </div>
         <div data-reveal className={`${card} flex items-center gap-3 p-3`}>
-          <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#f3f3f3] text-[#555]">
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#f3f3f3] text-[#1f1f1f]">
             <Workflow aria-hidden className="size-5" strokeWidth={1.8} />
           </span>
           <p className="min-w-0 text-[13px] font-semibold leading-snug text-[#1a1a1a]">

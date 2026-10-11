@@ -128,7 +128,7 @@ export function SectionHeading({
       >
         {title}
       </h2>
-      {intro && <p className="mt-4 text-pretty text-lg leading-relaxed text-[#555]">{intro}</p>}
+      {intro && <p className="mt-4 text-pretty text-lg leading-relaxed text-[#1f1f1f]">{intro}</p>}
     </div>
   );
 }

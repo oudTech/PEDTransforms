@@ -68,7 +68,7 @@ export async function renderOgImage({
             {title}
           </div>
           {subtitle && (
-            <div style={{ marginTop: 20, fontSize: 28, lineHeight: 1.4, color: "#555", maxWidth: 960 }}>
+            <div style={{ marginTop: 20, fontSize: 28, lineHeight: 1.4, color: "#1f1f1f", maxWidth: 960 }}>
               {subtitle}
             </div>
           )}

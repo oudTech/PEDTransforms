@@ -5,6 +5,7 @@ import JsonLd from "@/components/JsonLd";
 import { PageHero } from "@/components/sections";
 import { serviceMenu } from "@/data/services";
 import { company, contact } from "@/data/site";
+import { serverEnv } from "@/lib/env.server";
 import { absoluteUrl, organizationId, pageMetadata } from "@/lib/seo";
 import ContactForm, { ContactFormWithParams } from "./ContactForm";
 
@@ -20,6 +21,7 @@ export const metadata: Metadata = pageMetadata({
 type Detail = { label: string; value: string; href?: string; icon: LucideIcon };
 
 export default function ContactPage() {
+  const turnstileSiteKey = serverEnv.turnstile?.siteKey;
   const details = [
     contact.email && { label: "Email", value: contact.email, href: `mailto:${contact.email}`, icon: Mail },
     contact.phone && {
@@ -94,8 +96,8 @@ export default function ContactPage() {
 
           <div className="min-w-0">
             <h2 className="sr-only">Send us a message</h2>
-            <Suspense fallback={<ContactForm menu={serviceMenu} />}>
-              <ContactFormWithParams menu={serviceMenu} />
+            <Suspense fallback={<ContactForm menu={serviceMenu} turnstileSiteKey={turnstileSiteKey} />}>
+              <ContactFormWithParams menu={serviceMenu} turnstileSiteKey={turnstileSiteKey} />
             </Suspense>
           </div>
         </div>

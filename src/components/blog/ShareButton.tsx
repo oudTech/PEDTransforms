@@ -84,7 +84,7 @@ export default function ShareButton({
         className={`flex size-8 items-center sm:size-9 justify-center rounded-full border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)] focus-visible:ring-offset-2 ${
           light
             ? "border-white/25 text-white hover:border-white hover:bg-white hover:text-[#111] focus-visible:ring-offset-[#111]"
-            : "border-black/10 bg-white text-[#555] hover:border-[var(--brand)] hover:bg-[var(--brand)] hover:text-white"
+            : "border-black/10 bg-white text-[#1f1f1f] hover:border-[var(--brand)] hover:bg-[var(--brand)] hover:text-white"
         } ${copied ? (light ? "border-white bg-white text-[#111]" : "border-[var(--brand)] bg-[var(--brand)] text-white") : ""}`}
       >
         {copied ? <Check aria-hidden className="size-4" /> : <Share2 aria-hidden className="size-4" />}

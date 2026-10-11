@@ -275,3 +275,30 @@ body {
     }
   }
 }
+
+@keyframes success-countdown {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.success-dialog::backdrop {
+  background-color: rgb(11 11 15 / 0.45);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  animation: success-backdrop-in 0.3s ease-out;
+}
+
+.success-dialog[data-closing]::backdrop {
+  opacity: 0;
+  transition: opacity 0.15s ease-in;
+}
+
+@keyframes success-backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
