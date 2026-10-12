@@ -51,6 +51,15 @@ body {
   font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
 }
 
+/* iOS zooms into any focused field under 16px. Unlayered, so it beats text-* utilities. */
+@media (pointer: coarse) {
+  input,
+  select,
+  textarea {
+    font-size: max(16px, 1em);
+  }
+}
+
 /*
  * Scroll reveal. RevealObserver adds .reveal-ready to <html> once JS runs, so
  * content stays visible without JS. Elements already on screen at load are

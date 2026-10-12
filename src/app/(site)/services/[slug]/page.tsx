@@ -200,11 +200,12 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
                   <li
                     key={step.title}
                     data-reveal
-                    className="group relative flex flex-col overflow-hidden rounded-2xl border border-black/[0.06] bg-gradient-to-b from-white to-[#fafafa] p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition duration-300 odd:last:col-span-2 hover:-translate-y-0.5 hover:border-[var(--brand)]/20 hover:shadow-[0_8px_24px_-16px_rgba(0,0,0,0.12)] sm:p-6"
+                    tabIndex={0}
+                    className="group relative flex flex-col overflow-hidden rounded-2xl border border-black/[0.06] bg-gradient-to-b from-white to-[#fafafa] p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)] outline-none transition duration-300 [-webkit-tap-highlight-color:transparent] odd:last:col-span-2 hover:-translate-y-0.5 hover:border-[var(--brand)]/20 hover:shadow-[0_8px_24px_-16px_rgba(0,0,0,0.12)] focus:-translate-y-0.5 focus:border-[var(--brand)]/20 focus:shadow-[0_8px_24px_-16px_rgba(0,0,0,0.12)] focus-visible:ring-2 focus-visible:ring-[var(--brand)]/30 sm:p-6"
                   >
                     <span
                       aria-hidden
-                      className="pointer-events-none absolute -right-1 -top-2 select-none text-[56px] font-bold leading-none tracking-tighter text-black/[0.04] transition group-hover:text-[var(--brand)]/[0.08] sm:-top-3 sm:text-[80px]"
+                      className="pointer-events-none absolute -right-1 -top-2 select-none text-[56px] font-bold leading-none tracking-tighter text-black/[0.04] transition group-hover:text-[var(--brand)]/[0.08] group-focus:text-[var(--brand)]/[0.08] sm:-top-3 sm:text-[80px]"
                     >
                       {String(index + 1).padStart(2, "0")}
                     </span>
