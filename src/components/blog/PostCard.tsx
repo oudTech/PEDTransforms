@@ -45,9 +45,12 @@ export default function PostCard({ post }: { post: PostCardType }) {
             {post.excerpt}
           </p>
         )}
-        <div className="mt-auto flex items-end justify-between gap-2 pt-3 sm:gap-3 sm:pt-5">
-          <PostMeta post={post} compact />
-          <ShareButton path={href} title={post.title} className="shrink-0" />
+        <div className="mt-auto pt-3 sm:pt-5">
+          <PostMeta
+            post={post}
+            compact
+            action={<ShareButton path={href} title={post.title} className="shrink-0" />}
+          />
         </div>
       </div>
     </article>
