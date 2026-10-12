@@ -1,4 +1,4 @@
-import Image from "next/image";
+import SanityImage from "@/components/blog/SanityImage";
 import Link from "next/link";
 import { stegaClean } from "next-sanity";
 import { blurProps, urlFor } from "@/sanity/lib/image";
@@ -14,7 +14,7 @@ export default function PostCard({ post }: { post: PostCardType }) {
     <article data-reveal className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-black/[0.06] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_-18px_rgba(0,0,0,0.25)] sm:rounded-2xl">
       <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-[#fff1f1] to-[#f4f4f5] sm:aspect-[16/10]">
         {post.mainImage ? (
-          <Image
+          <SanityImage
             src={urlFor(post.mainImage).width(800).height(500).url()}
             alt={post.mainImage.alt || post.title}
             fill

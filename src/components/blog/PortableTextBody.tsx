@@ -1,4 +1,4 @@
-import Image from "next/image";
+import SanityPicture from "@/components/blog/SanityImage";
 import Link from "next/link";
 import {
   PortableText,
@@ -134,7 +134,7 @@ const components: PortableTextComponents = {
       const ratio = Math.min(1, 1600 / width);
       return (
         <figure className="my-10">
-          <Image
+          <SanityPicture
             src={urlFor(value).width(1600).url()}
             alt={value.alt || ""}
             width={Math.round(width * ratio)}

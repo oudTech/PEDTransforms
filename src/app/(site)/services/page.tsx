@@ -50,7 +50,7 @@ export default function ServicesPage() {
               href={`#${category.id}`}
               className="rounded-full border border-white/15 px-4 py-2 text-sm font-medium text-white/80 transition hover:border-white/40 hover:text-white"
             >
-              {category.number} {category.title}
+              {category.title}
             </a>
           ))}
         </nav>
@@ -66,7 +66,9 @@ export default function ServicesPage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
               <div>
-                <span className="text-5xl font-semibold text-[var(--brand)]/20">{category.number}</span>
+                <span aria-hidden className="text-5xl font-semibold text-[var(--brand)]/20">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
                 <SectionHeading
                   id={`${category.id}-heading`}
                   eyebrow={category.tagline}
@@ -76,7 +78,11 @@ export default function ServicesPage() {
               </div>
               <div className="grid grid-cols-2 gap-3 sm:gap-6">
                 {servicesInCategory(category.id).map((service) => (
-                  <ServiceCard key={service.slug} service={service} />
+                  <ServiceCard
+                    key={service.slug}
+                    service={service}
+                    sizes="(max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 400px"
+                  />
                 ))}
               </div>
             </div>

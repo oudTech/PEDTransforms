@@ -161,10 +161,13 @@ export function Lifecycle({ tone = "light" }: { tone?: "light" | "dark" }) {
           key={item.step}
           className={`relative p-4 sm:p-6 ${dark ? "bg-[#161616]" : "bg-white"}`}
         >
-          <span className={`text-xs font-semibold tracking-widest ${dark ? "text-white/40" : "text-[#aaa]"}`}>
+          <span
+            aria-hidden
+            className={`mb-2 block text-xs font-semibold tracking-widest lg:hidden ${dark ? "text-white/40" : "text-[#aaa]"}`}
+          >
             {String(index + 1).padStart(2, "0")}
           </span>
-          <p className={`mt-2 text-base font-semibold sm:text-lg ${dark ? "text-white" : "text-[#1a1a1a]"}`}>
+          <p className={`text-base font-semibold sm:text-lg ${dark ? "text-white" : "text-[#1a1a1a]"}`}>
             {item.step}
             {index < lifecycle.length - 1 && (
               <span className="ml-2 text-[var(--brand)]" aria-hidden>
@@ -197,10 +200,12 @@ export function ValueProposition({
   eyebrow,
   title,
   intro,
+  className,
 }: {
   eyebrow: string;
   title: ReactNode;
   intro?: ReactNode;
+  className?: string;
 }) {
   return (
     <FeatureSection
@@ -208,6 +213,7 @@ export function ValueProposition({
       eyebrow={eyebrow}
       title={title}
       intro={intro}
+      className={className}
       listLabel="What we help organisations do"
       tasks={valueProposition.map((item) => ({
         title: item,

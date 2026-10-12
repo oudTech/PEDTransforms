@@ -129,7 +129,7 @@ export default function Header({ menu }: { menu: ServiceMenu }) {
                       {menu.map((category) => (
                         <div key={category.id}>
                           <p className="px-3 text-xs font-semibold uppercase tracking-widest text-[var(--brand)]">
-                            {category.number} {category.title}
+                            {category.title}
                           </p>
                           <ul className="mt-2 space-y-1">
                             {category.services.map((service) => (

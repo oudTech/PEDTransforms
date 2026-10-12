@@ -160,7 +160,7 @@ export function layout({
 }) {
   const contactLine = [
     contact.email && link(`mailto:${contact.email}`, contact.email),
-    contact.phone && link(telHref(contact.phone), contact.phone),
+    ...contact.phones.map((phone) => link(telHref(phone), phone)),
   ]
     .filter(Boolean)
     .join(`<span style="color:#c4c4cc">&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>`);

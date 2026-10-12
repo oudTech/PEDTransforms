@@ -106,6 +106,8 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],
+    // No image on the site renders wider than ~1150 CSS px, so 2048/3840 variants are never needed.
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     // Sanity asset URLs are content-addressed, so optimised copies never go stale.
     minimumCacheTTL: 2678400,
     remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io", pathname: sanityImagePath }],

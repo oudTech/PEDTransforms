@@ -86,7 +86,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           { name: "Our Services", path: "/services" },
           { name: service.title, path: `/services/${service.slug}` },
         ]}
-        eyebrow={`${category.number} ${category.title}`}
+        eyebrow={category.title}
         title={service.title}
         intro={service.intro}
       >
@@ -151,13 +151,28 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
             title={`Our ${service.title.toLowerCase()} capabilities`}
           />
           <ul className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
-            {service.capabilities.map((capability, index) => (
-              <li key={capability.title} className="rounded-2xl border border-black/[0.06] bg-white p-5 sm:p-7">
-                <span className="flex size-9 items-center justify-center rounded-lg bg-[#fff1f1] text-xs font-bold text-[var(--brand)] sm:size-10 sm:rounded-xl sm:text-sm">
-                  {String(index + 1).padStart(2, "0")}
+            {service.capabilities.map((capability) => (
+              <li
+                key={capability.title}
+                data-reveal
+                className="rounded-2xl border border-black/[0.06] bg-white p-6 transition-colors duration-300 hover:border-black/[0.14] sm:p-7"
+              >
+                <span
+                  aria-hidden
+                  className="flex size-8 items-center justify-center rounded-full bg-[var(--brand)]/[0.06] text-[var(--brand)]"
+                >
+                  <svg width="13" height="13" viewBox="0 0 12 12" fill="none">
+                    <path
+                      d="M2.5 6l2.5 2.5 4.5-5"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
                 </span>
-                <h3 className="mt-4 text-base font-semibold leading-snug text-[#1a1a1a] sm:mt-5 sm:text-lg">{capability.title}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-[#1f1f1f] sm:mt-2 sm:text-[15px]">{capability.description}</p>
+                <h3 className="mt-5 text-base font-semibold leading-snug tracking-tight text-[#1a1a1a] sm:text-lg">{capability.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[#1f1f1f]/75 sm:text-[15px]">{capability.description}</p>
               </li>
             ))}
           </ul>
@@ -166,7 +181,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
 
       <section className="bg-white py-20 lg:py-24" aria-labelledby="outcomes-heading">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
-          <div>
+          <div className="lg:sticky lg:top-28 lg:self-start">
             <SectionHeading id="outcomes-heading" eyebrow="The outcome" title="What you can expect" />
             <ul className="mt-8 space-y-4">
               {service.outcomes.map((outcome) => (
@@ -181,23 +196,19 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
             <SectionHeading eyebrow="How we deliver" title="A clear, structured process" />
             <ol className="mt-8 grid grid-cols-2 gap-3 sm:gap-4">
               {service.process.map((step, index) => {
-                const number = String(index + 1).padStart(2, "0");
                 return (
                   <li
                     key={step.title}
                     data-reveal
-                    className="group relative flex flex-col overflow-hidden rounded-2xl border border-black/[0.06] bg-gradient-to-b from-white to-[#fafafa] p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition duration-300 odd:last:col-span-2 hover:-translate-y-0.5 hover:border-[var(--brand)]/20 hover:shadow-[0_20px_40px_-24px_rgba(189,0,0,0.35)] sm:p-6"
+                    className="group relative flex flex-col overflow-hidden rounded-2xl border border-black/[0.06] bg-gradient-to-b from-white to-[#fafafa] p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition duration-300 odd:last:col-span-2 hover:-translate-y-0.5 hover:border-[var(--brand)]/20 hover:shadow-[0_8px_24px_-16px_rgba(0,0,0,0.12)] sm:p-6"
                   >
                     <span
                       aria-hidden
                       className="pointer-events-none absolute -right-1 -top-2 select-none text-[56px] font-bold leading-none tracking-tighter text-black/[0.04] transition group-hover:text-[var(--brand)]/[0.08] sm:-top-3 sm:text-[80px]"
                     >
-                      {number}
+                      {String(index + 1).padStart(2, "0")}
                     </span>
-                    <span className="inline-flex w-fit items-center rounded-full bg-[#fff1f1] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--brand)] sm:text-[11px]">
-                      Step {number}
-                    </span>
-                    <h3 className="mt-4 text-base font-semibold leading-snug text-[#1a1a1a] sm:mt-5 sm:text-lg">
+                    <h3 className="relative text-base font-semibold leading-snug text-[#1a1a1a] sm:text-lg">
                       {step.title}
                     </h3>
                     <p className="mt-1.5 text-[13px] leading-relaxed text-[#1f1f1f] sm:text-sm">{step.description}</p>

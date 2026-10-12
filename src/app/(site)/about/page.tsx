@@ -1,8 +1,8 @@
 import { Bot, Compass, Layers, UsersRound, type LucideIcon } from "lucide-react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import AboutShowcase from "@/components/AboutShowcase";
 import JsonLd from "@/components/JsonLd";
+import TeamGrid from "@/components/TeamGrid";
 import {
   CallToAction,
   Lifecycle,
@@ -45,6 +45,16 @@ export default function AboutPage() {
           url: absoluteUrl("/about"),
           description,
           about: { "@id": organizationId },
+          ...(team.length > 0 && {
+            mentions: team.map((member) => ({
+              "@type": "Person",
+              name: member.name,
+              jobTitle: member.focus ? `${member.role}, ${member.focus}` : member.role,
+              ...(member.photo && { image: absoluteUrl(member.photo.src) }),
+              ...(member.linkedin && { sameAs: member.linkedin }),
+              worksFor: { "@id": organizationId },
+            })),
+          }),
         }}
       />
 
@@ -148,63 +158,28 @@ export default function AboutPage() {
         />
       </section>
 
-      <ValueProposition
-        eyebrow="Our value proposition"
-        title="Technology, people and strategic expertise, together."
-        intro="We combine all three so organisations can modernise, automate, scale and decide with confidence."
-      />
-
-      <WhyUs title="What sets us apart" />
-
       {team.length > 0 && (
         <section className="bg-white py-20 lg:py-28" aria-labelledby="team-heading">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <SectionHeading
               id="team-heading"
-              eyebrow="Our team"
-              title="The people behind PEDTransforms"
+              eyebrow="Leadership"
+              title="Meet our leadership team"
+              intro="Experienced professionals across technology, strategy and transformation, working alongside our wider team and specialist partners."
             />
-            <ul className="mt-12 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
-              {team.map((member) => (
-                <li key={member.name} className="overflow-hidden rounded-2xl border border-black/[0.06] bg-white">
-                  <div className="relative aspect-[4/5] bg-[#f4f4f5]">
-                    {member.photo ? (
-                      <Image
-                        src={member.photo}
-                        alt={`${member.name}, ${member.role}`}
-                        fill
-                        sizes="(max-width: 1024px) 50vw, 25vw"
-                        className="object-cover"
-                      />
-                    ) : (
-                      <span className="absolute inset-0 flex items-center justify-center text-5xl font-semibold text-[var(--brand)]/30">
-                        {member.name.charAt(0)}
-                      </span>
-                    )}
-                  </div>
-                  <div className="p-3.5 sm:p-5">
-                    <h3 className="text-sm font-semibold text-[#1a1a1a] sm:text-lg">{member.name}</h3>
-                    <p className="text-xs text-[var(--brand)] sm:text-sm">{member.role}</p>
-                    {member.bio && (
-                      <p className="mt-2 text-[13px] leading-relaxed text-[#1f1f1f] sm:text-sm">{member.bio}</p>
-                    )}
-                    {member.linkedin && (
-                      <a
-                        href={member.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-3 inline-block text-sm font-semibold text-[#1a1a1a] hover:text-[var(--brand)]"
-                      >
-                        LinkedIn profile
-                      </a>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <TeamGrid members={team} />
           </div>
         </section>
       )}
+
+      <ValueProposition
+        eyebrow="Our value proposition"
+        title="Technology, people and strategic expertise, together."
+        intro="We combine all three so organisations can modernise, automate, scale and decide with confidence."
+        className="bg-[#fafafa]"
+      />
+
+      <WhyUs title="What sets us apart" className="bg-white" />
 
       <CallToAction
         title="Transform. Automate. Augment. Optimise."

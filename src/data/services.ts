@@ -5,7 +5,6 @@ export type ServiceCategoryId =
 
 export type ServiceCategory = {
   id: ServiceCategoryId;
-  number: string;
   title: string;
   tagline: string;
   summary: string;
@@ -32,7 +31,6 @@ export type SubService = {
 export const serviceCategories: ServiceCategory[] = [
   {
     id: "digital-transformation",
-    number: "01",
     title: "Digital Transformation",
     tagline: "Digitise. Integrate. Transform.",
     summary:
@@ -40,7 +38,6 @@ export const serviceCategories: ServiceCategory[] = [
   },
   {
     id: "automation-smart-systems",
-    number: "02",
     title: "Automation & Smart Systems",
     tagline: "Connect. Automate. Monitor.",
     summary:
@@ -48,7 +45,6 @@ export const serviceCategories: ServiceCategory[] = [
   },
   {
     id: "consulting-advisory",
-    number: "03",
     title: "Consulting & Advisory",
     tagline: "Assess. Strategise. Optimise.",
     summary:
@@ -628,14 +624,12 @@ export function servicesInCategory(id: ServiceCategoryId) {
 /** Just what navigation and forms need, so client components can take it as a prop. */
 export type ServiceMenu = {
   id: ServiceCategoryId;
-  number: string;
   title: string;
   services: { slug: string; title: string; summary: string }[];
 }[];
 
-export const serviceMenu: ServiceMenu = serviceCategories.map(({ id, number, title }) => ({
+export const serviceMenu: ServiceMenu = serviceCategories.map(({ id, title }) => ({
   id,
-  number,
   title,
   services: servicesInCategory(id).map(({ slug, title, summary }) => ({ slug, title, summary })),
 }));

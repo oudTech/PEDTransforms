@@ -18,20 +18,23 @@ export const metadata: Metadata = pageMetadata({
   path: "/contact",
 });
 
-type Detail = { label: string; value: string; href?: string; icon: LucideIcon };
+type Detail = { label: string; values: { text: string; href?: string }[]; icon: LucideIcon };
 
 export default function ContactPage() {
   const turnstileSiteKey = serverEnv.turnstile?.siteKey;
   const details = [
-    contact.email && { label: "Email", value: contact.email, href: `mailto:${contact.email}`, icon: Mail },
-    contact.phone && {
+    contact.email && {
+      label: "Email",
+      values: [{ text: contact.email, href: `mailto:${contact.email}` }],
+      icon: Mail,
+    },
+    contact.phones.length > 0 && {
       label: "Phone",
-      value: contact.phone,
-      href: `tel:${contact.phone.replace(/[^\d+]/g, "")}`,
+      values: contact.phones.map((phone) => ({ text: phone, href: `tel:${phone.replace(/[^\d+]/g, "")}` })),
       icon: PhoneCall,
     },
-    contact.address && { label: "Location", value: contact.address, icon: MapPin },
-    contact.hours && { label: "Business hours", value: contact.hours, icon: Clock },
+    contact.address && { label: "Location", values: [{ text: contact.address }], icon: MapPin },
+    contact.hours && { label: "Business hours", values: [{ text: contact.hours }], icon: Clock },
   ].filter((item): item is Detail => Boolean(item));
 
   return (
@@ -70,22 +73,27 @@ export default function ContactPage() {
 
             {details.length > 0 && (
               <address className="mt-8 grid gap-5 not-italic sm:mt-10 sm:gap-6">
-                {details.map(({ label, value, href, icon: Icon }) => (
+                {details.map(({ label, values, icon: Icon }) => (
                   <div key={label} className="flex items-center gap-4">
                     <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#fff1f1] text-[var(--brand)]">
                       <Icon aria-hidden className="size-5" strokeWidth={1.8} />
                     </span>
                     <div className="min-w-0">
                       <p className="text-sm text-[#777]">{label}:</p>
-                      {href ? (
-                        <a
-                          href={href}
-                          className="block break-words text-[17px] font-semibold text-[var(--brand)] transition hover:text-[var(--brand-dark)] hover:underline hover:underline-offset-4"
-                        >
-                          {value}
-                        </a>
-                      ) : (
-                        <p className="text-[17px] font-semibold text-[#1a1a1a]">{value}</p>
+                      {values.map(({ text, href }) =>
+                        href ? (
+                          <a
+                            key={text}
+                            href={href}
+                            className="block w-fit break-words text-[17px] font-semibold text-[var(--brand)] transition hover:text-[var(--brand-dark)] hover:underline hover:underline-offset-4"
+                          >
+                            {text}
+                          </a>
+                        ) : (
+                          <p key={text} className="text-[17px] font-semibold text-[#1a1a1a]">
+                            {text}
+                          </p>
+                        ),
                       )}
                     </div>
                   </div>

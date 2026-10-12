@@ -1,8 +1,11 @@
 "use client";
 
+import { SearchX } from "lucide-react";
+import Link from "next/link";
 import { useDeferredValue, useMemo, useState } from "react";
 import { stegaClean } from "next-sanity";
 import type { Category, PostCard as PostCardType } from "@/sanity/lib/types";
+import BlogEmptyState, { emptyPrimaryAction, emptySecondaryAction } from "./BlogEmptyState";
 import PostCard from "./PostCard";
 
 const PAGE_SIZE = 9;
@@ -119,22 +122,39 @@ export default function BlogExplorer({
           ))}
         </div>
       ) : (
-        <div className="rounded-2xl border border-dashed border-black/10 bg-[#fafafa] px-6 py-16 text-center">
-          <p className="text-lg font-semibold text-[#1a1a1a]">No articles found</p>
-          <p className="mt-1 text-sm text-[#666]">
-            Try a different search term or category.
-          </p>
-          <button
-            type="button"
-            onClick={() => {
-              setQuery("");
-              selectCategory(null);
-            }}
-            className="mt-5 rounded-full bg-[var(--brand)] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[var(--brand-dark)]"
-          >
-            Clear filters
-          </button>
-        </div>
+        <BlogEmptyState
+          icon={SearchX}
+          headingLevel="h3"
+          className="max-w-none py-12 md:py-16"
+          title="Nothing matches that… yet"
+          description={
+            query.trim() ? (
+              <>
+                We couldn&apos;t find an article about &ldquo;{query.trim()}&rdquo;. Try a broader
+                term or another topic, or ask us directly. Your question might become our next post.
+              </>
+            ) : (
+              "No articles in this topic yet. Try another one, or ask us directly. Your question might become our next post."
+            )
+          }
+          actions={
+            <>
+              <button
+                type="button"
+                onClick={() => {
+                  setQuery("");
+                  selectCategory(null);
+                }}
+                className={emptyPrimaryAction}
+              >
+                Clear filters
+              </button>
+              <Link href="/contact" className={emptySecondaryAction}>
+                Ask our team
+              </Link>
+            </>
+          }
+        />
       )}
 
       {filtered.length > visible && (

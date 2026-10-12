@@ -285,14 +285,16 @@ body {
   }
 }
 
-.success-dialog::backdrop {
+.success-dialog::backdrop,
+.team-dialog::backdrop {
   background-color: rgb(11 11 15 / 0.45);
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
   animation: success-backdrop-in 0.3s ease-out;
 }
 
-.success-dialog[data-closing]::backdrop {
+.success-dialog[data-closing]::backdrop,
+.team-dialog[data-closing]::backdrop {
   opacity: 0;
   transition: opacity 0.15s ease-in;
 }

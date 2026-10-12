@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { stegaClean } from "next-sanity";
+import { preconnect } from "react-dom";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import JsonLd from "@/components/JsonLd";
 import PortableTextBody, { getHeadings } from "@/components/blog/PortableTextBody";
 import PostCard from "@/components/blog/PostCard";
 import PostMeta from "@/components/blog/PostMeta";
 import ReadingProgress from "@/components/blog/ReadingProgress";
+import SanityImage from "@/components/blog/SanityImage";
 import ShareButtons from "@/components/blog/ShareButtons";
 import TableOfContents from "@/components/blog/TableOfContents";
 import { absoluteUrl, organizationId, pageMetadata } from "@/lib/seo";
@@ -21,12 +22,18 @@ import type { Post } from "@/sanity/lib/types";
 
 export async function generateStaticParams() {
   if (!isSanityConfigured) return [];
-  const slugs = await client.fetch<string[]>(
-    postSlugsQuery,
-    {},
-    { perspective: "published", stega: false },
-  );
-  return slugs.map((slug) => ({ slug }));
+  try {
+    const slugs = await client.fetch<string[]>(
+      postSlugsQuery,
+      {},
+      { perspective: "published", stega: false },
+    );
+    return slugs.map((slug) => ({ slug }));
+  } catch (error) {
+    // A Sanity hiccup must not fail the deploy; articles then render on first request.
+    console.warn("[sanity] Could not prebuild blog posts; they will render on demand.", error);
+    return [];
+  }
 }
 
 async function getPost(slug: string) {
@@ -34,6 +41,7 @@ async function getPost(slug: string) {
     query: postQuery,
     params: { slug },
     tags: ["post", `post:${slug}`, "author", "category"],
+    required: true,
   });
 }
 
@@ -109,6 +117,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
   const { slug } = await params;
   const post = await getPost(slug);
   if (!post) notFound();
+  preconnect("https://cdn.sanity.io");
 
   const headings = getHeadings(post.body);
   const url = absoluteUrl(`/blog/${post.slug}`);
@@ -159,7 +168,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
           {post.mainImage && (
             <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
               <div className="relative aspect-[16/8] overflow-hidden rounded-3xl shadow-2xl shadow-black/10">
-                <Image
+                <SanityImage
                   src={urlFor(post.mainImage).width(2000).height(1000).url()}
                   alt={post.mainImage.alt || post.title}
                   fill
@@ -190,7 +199,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
             {post.author && (
               <div className="mt-10 flex gap-5 rounded-2xl bg-[#fafafa] p-6">
                 {post.author.image ? (
-                  <Image
+                  <SanityImage
                     src={urlFor(post.author.image).width(160).height(160).url()}
                     alt={post.author.name}
                     width={64}

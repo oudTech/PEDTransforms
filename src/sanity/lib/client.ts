@@ -15,5 +15,8 @@ export const client = createClient({
   apiVersion,
   useCdn: true,
   perspective: "published",
+  // Fail fast on a stalled connection instead of the 5-minute default with 5 retries.
+  timeout: 8_000,
+  maxRetries: 2,
   stega: { studioUrl },
 });

@@ -1,3 +1,4 @@
+import { ArrowUpRight, Bot, Compass, Layers, Workflow, type LucideIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,7 +13,7 @@ import {
   ValueProposition,
   WhyUs,
 } from "@/components/sections";
-import { serviceCategories, servicesInCategory } from "@/data/services";
+import { serviceCategories, servicesInCategory, type ServiceCategoryId } from "@/data/services";
 import { images } from "@/data/images";
 import { company } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
@@ -74,6 +75,12 @@ export default async function HomePage() {
   );
 }
 
+const heroServiceIcons: Record<ServiceCategoryId, LucideIcon> = {
+  "digital-transformation": Layers,
+  "automation-smart-systems": Bot,
+  "consulting-advisory": Compass,
+};
+
 function Hero() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-[#fafafa] via-white to-[#fff5f5]">
@@ -131,23 +138,58 @@ function Hero() {
               sizes="(max-width: 1024px) calc(100vw - 32px), 600px"
               className="object-cover"
             />
+            <div
+              aria-hidden
+              className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/45 via-black/10 to-transparent"
+            />
           </div>
-          <div className="absolute -bottom-6 left-4 right-4 grid grid-cols-3 gap-2 rounded-2xl border border-black/5 bg-white/95 p-3 shadow-xl backdrop-blur sm:left-8 sm:right-auto sm:w-[420px]">
-            {serviceCategories.map((category) => (
-              <a
-                key={category.id}
-                href={`#${category.id}`}
-                className="rounded-xl px-3 py-2 transition hover:bg-[#fff5f5]"
-              >
-                <span className="block text-xs font-semibold text-[var(--brand)]">
-                  {category.number}
-                </span>
-                <span className="mt-0.5 block text-xs font-semibold leading-snug text-[#1a1a1a]">
-                  {category.title}
-                </span>
-              </a>
-            ))}
+
+          <div
+            className={`absolute left-3 top-3 flex items-center gap-3 rounded-2xl bg-white/85 py-2.5 pl-2.5 pr-4 shadow-[0_12px_32px_-12px_rgba(0,0,0,0.35)] ring-1 ring-white/70 backdrop-blur-md sm:left-5 sm:top-5 ${enter} [animation-delay:450ms]`}
+          >
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-[var(--brand)] text-white shadow-[0_8px_18px_-8px_rgba(189,0,0,0.8)]">
+              <Workflow aria-hidden className="size-[18px]" strokeWidth={2} />
+            </span>
+            <span className="leading-tight">
+              <span className="block text-[13px] font-semibold text-[#1a1a1a]">One accountable partner</span>
+              <span className="mt-0.5 block text-[11px] text-[#1f1f1f]/70">From advice to managed operations</span>
+            </span>
           </div>
+
+          <nav
+            aria-label="Core services"
+            className={`absolute -bottom-9 inset-x-3 rounded-2xl bg-white/90 p-1.5 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.4)] ring-1 ring-black/[0.04] backdrop-blur-xl sm:inset-x-6 ${enter} [animation-delay:550ms]`}
+          >
+            <ul className="grid grid-cols-3">
+              {serviceCategories.map((category, index) => {
+                const Icon = heroServiceIcons[category.id];
+                return (
+                  <li key={category.id} className="relative">
+                    {index > 0 && (
+                      <span aria-hidden className="absolute inset-y-3 left-0 w-px bg-black/[0.07]" />
+                    )}
+                    <a
+                      href={`#${category.id}`}
+                      className="group relative flex h-full flex-col gap-2.5 rounded-xl p-2.5 transition-colors hover:bg-[#fff5f5] focus-visible:outline-2 focus-visible:outline-[var(--brand)] sm:p-3.5"
+                    >
+                      <span className="flex items-center justify-between">
+                        <span className="flex size-8 items-center justify-center rounded-lg bg-[#fff1f1] text-[var(--brand)] transition-colors group-hover:bg-[var(--brand)] group-hover:text-white sm:size-9 sm:rounded-xl">
+                          <Icon aria-hidden className="size-4 sm:size-[18px]" strokeWidth={1.8} />
+                        </span>
+                        <ArrowUpRight
+                          aria-hidden
+                          className="hidden size-4 -translate-x-1 translate-y-1 text-[var(--brand)] opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 sm:block"
+                        />
+                      </span>
+                      <span className="text-[11px] font-semibold leading-snug text-[#1a1a1a] sm:text-[13px]">
+                        {category.title}
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
         </div>
       </div>
     </section>
@@ -166,7 +208,7 @@ function CoreServices() {
         />
 
         <div className="mt-14 grid gap-6 lg:grid-cols-3">
-          {serviceCategories.map((category) => (
+          {serviceCategories.map((category, index) => (
             <article
               key={category.id}
               id={category.id}
@@ -174,8 +216,8 @@ function CoreServices() {
               className="flex scroll-mt-28 flex-col rounded-3xl border border-black/[0.06] bg-[#fafafa] p-8"
             >
               <div className="flex items-baseline justify-between">
-                <span className="text-4xl font-semibold text-[var(--brand)]/25">
-                  {category.number}
+                <span aria-hidden className="text-4xl font-semibold text-[var(--brand)]/25">
+                  {String(index + 1).padStart(2, "0")}
                 </span>
                 <span className="text-xs font-semibold uppercase tracking-widest text-[var(--brand)]">
                   {category.tagline}

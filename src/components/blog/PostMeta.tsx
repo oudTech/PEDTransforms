@@ -1,4 +1,4 @@
-import Image from "next/image";
+import SanityImage from "@/components/blog/SanityImage";
 import { formatDate, readingTime } from "@/lib/format";
 import { urlFor } from "@/sanity/lib/image";
 import type { PostCard } from "@/sanity/lib/types";
@@ -26,7 +26,7 @@ export default function PostMeta({
       {post.author && (
         <span className={`flex items-center gap-2 ${author}`}>
           {post.author.image ? (
-            <Image
+            <SanityImage
               src={urlFor(post.author.image).width(64).height(64).url()}
               alt={post.author.name}
               width={28}

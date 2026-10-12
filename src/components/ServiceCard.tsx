@@ -3,7 +3,14 @@ import Link from "next/link";
 import { serviceImage } from "@/data/images";
 import type { SubService } from "@/data/services";
 
-export default function ServiceCard({ service }: { service: SubService }) {
+export default function ServiceCard({
+  service,
+  sizes = "(max-width: 1280px) 50vw, 600px",
+}: {
+  service: SubService;
+  /** Rendered width hint for the photo; the default suits a full-width two-column grid. */
+  sizes?: string;
+}) {
   const image = serviceImage(service.slug);
   return (
     <article data-reveal className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-black/[0.06] bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_-18px_rgba(0,0,0,0.25)] sm:rounded-2xl">
@@ -13,7 +20,7 @@ export default function ServiceCard({ service }: { service: SubService }) {
           alt={image.alt}
           fill
           placeholder="blur"
-          sizes="(max-width: 640px) 50vw, (max-width: 1280px) 50vw, 400px"
+          sizes={sizes}
           className="object-cover transition duration-500 group-hover:scale-[1.04]"
         />
       </div>

@@ -72,17 +72,15 @@ export const organizationId = `${siteUrl}/#organization`;
 export const websiteId = `${siteUrl}/#website`;
 
 export function organizationJsonLd() {
-  const contactPoint =
-    contact.email || contact.phone
-      ? [
-          {
-            "@type": "ContactPoint",
-            contactType: "customer service",
-            ...(contact.email ? { email: contact.email } : {}),
-            ...(contact.phone ? { telephone: contact.phone } : {}),
-          },
-        ]
-      : undefined;
+  const points = contact.phones.length ? contact.phones : contact.email ? [undefined] : [];
+  const contactPoint = points.length
+    ? points.map((telephone, index) => ({
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        ...(contact.email && index === 0 ? { email: contact.email } : {}),
+        ...(telephone ? { telephone } : {}),
+      }))
+    : undefined;
 
   return {
     "@context": "https://schema.org",

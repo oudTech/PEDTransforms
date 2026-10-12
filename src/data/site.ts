@@ -12,7 +12,7 @@ export const company = {
 // Only fields with a value are displayed or added to structured data.
 export const contact = {
   email: "info@pedtransforms.com",
-  phone: "+234 706 523 9083",
+  phones: ["+234 706 523 9083", "+49 1573 1086377"],
   address: "Port Harcourt, Nigeria",
   /** Structured parts of `address`, for search engines. */
   locality: "Port Harcourt",

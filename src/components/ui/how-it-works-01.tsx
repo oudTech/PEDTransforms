@@ -62,20 +62,15 @@ export default function HowItWorks01({
             steps.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4",
           )}
         >
-          {steps.map((step, index) => (
+          {steps.map((step) => (
             <li
               key={step.title}
               data-reveal
               className="group relative flex flex-col gap-2.5 rounded-2xl border border-border bg-card p-5 shadow-sm shadow-black/5 transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.3)] sm:gap-3 sm:p-6"
             >
-              <div className="flex items-center justify-between">
-                <span className="grid size-9 place-items-center rounded-lg bg-[#fff1f1] text-[var(--brand)] transition-colors group-hover:bg-[var(--brand)] group-hover:text-white sm:size-10 sm:rounded-xl">
-                  <step.icon aria-hidden className="size-[18px] sm:size-5" strokeWidth={1.8} />
-                </span>
-                <span className="font-mono text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-              </div>
+              <span className="grid size-9 place-items-center rounded-lg bg-[#fff1f1] text-[var(--brand)] transition-colors group-hover:bg-[var(--brand)] group-hover:text-white sm:size-10 sm:rounded-xl">
+                <step.icon aria-hidden className="size-[18px] sm:size-5" strokeWidth={1.8} />
+              </span>
               <h3 className="mt-1 text-base font-semibold leading-snug tracking-tight text-foreground transition-colors group-hover:text-[var(--brand)] sm:text-lg">
                 {step.href ? (
                   <Link href={step.href} className="after:absolute after:inset-0">

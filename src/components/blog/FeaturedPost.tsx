@@ -1,4 +1,4 @@
-import Image from "next/image";
+import SanityImage from "@/components/blog/SanityImage";
 import Link from "next/link";
 import { stegaClean } from "next-sanity";
 import { blurProps, urlFor } from "@/sanity/lib/image";
@@ -13,7 +13,7 @@ export default function FeaturedPost({ post }: { post: PostCard }) {
     <article className="group relative grid overflow-hidden rounded-3xl bg-[#111] shadow-xl lg:grid-cols-[1.25fr_1fr]">
       <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-[440px]">
         {post.mainImage ? (
-          <Image
+          <SanityImage
             src={urlFor(post.mainImage).width(1400).height(900).url()}
             alt={post.mainImage.alt || post.title}
             fill

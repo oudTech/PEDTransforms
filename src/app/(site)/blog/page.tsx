@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import { PenLine } from "lucide-react";
 import Link from "next/link";
 import { stegaClean } from "next-sanity";
+import { preconnect } from "react-dom";
 import JsonLd from "@/components/JsonLd";
+import BlogEmptyState, { emptyPrimaryAction, emptySecondaryAction } from "@/components/blog/BlogEmptyState";
 import BlogExplorer from "@/components/blog/BlogExplorer";
 import FeaturedPost from "@/components/blog/FeaturedPost";
 import SanitySetupNotice from "@/components/blog/SanitySetupNotice";
@@ -22,10 +25,12 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default async function BlogPage() {
+  preconnect("https://cdn.sanity.io");
   const [posts, categories] = await Promise.all([
     sanityFetch<PostCard[]>({
       query: postsQuery,
       tags: ["post", "author", "category"],
+      required: true,
     }),
     sanityFetch<Category[]>({ query: categoriesQuery, tags: ["category", "post"] }),
   ]);
@@ -100,17 +105,21 @@ export default async function BlogPage() {
 
 function EmptyState() {
   return (
-    <div className="mx-auto max-w-xl rounded-3xl border border-dashed border-black/10 bg-[#fafafa] px-6 py-16 text-center">
-      <p className="text-xl font-semibold text-[#1a1a1a]">Articles are on the way</p>
-      <p className="mt-2 text-[#666]">
-        Our first insights will be published here soon. In the meantime, explore what we do.
-      </p>
-      <Link
-        href="/services"
-        className="mt-6 inline-block rounded-full bg-[var(--brand)] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--brand-dark)]"
-      >
-        Explore our services
-      </Link>
-    </div>
+    <BlogEmptyState
+      icon={PenLine}
+      eyebrow="Fresh ink, coming soon"
+      title="The first chapter is being written"
+      description="Our team is turning real client challenges into practical insights on transformation, automation and technology talent. Pull up a chair: the first articles land here soon."
+      actions={
+        <>
+          <Link href="/services" className={emptyPrimaryAction}>
+            Explore our services
+          </Link>
+          <Link href="/contact" className={emptySecondaryAction}>
+            Talk to us today
+          </Link>
+        </>
+      }
+    />
   );
 }
