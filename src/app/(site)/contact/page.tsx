@@ -1,4 +1,4 @@
-import { Clock, Mail, MapPin, PhoneCall, type LucideIcon } from "lucide-react";
+import { Clock, Mail, MapPin, type LucideIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import JsonLd from "@/components/JsonLd";
@@ -28,12 +28,11 @@ export default function ContactPage() {
       values: [{ text: contact.email, href: `mailto:${contact.email}` }],
       icon: Mail,
     },
-    contact.phones.length > 0 && {
-      label: "Phone",
-      values: contact.phones.map((phone) => ({ text: phone, href: `tel:${phone.replace(/[^\d+]/g, "")}` })),
-      icon: PhoneCall,
-    },
-    contact.address && { label: "Location", values: [{ text: contact.address }], icon: MapPin },
+    ...contact.offices.map((office) => ({
+      label: office.location,
+      values: [{ text: office.phone, href: `tel:${office.phone.replace(/[^\d+]/g, "")}` }],
+      icon: MapPin,
+    })),
     contact.hours && { label: "Business hours", values: [{ text: contact.hours }], icon: Clock },
   ].filter((item): item is Detail => Boolean(item));
 

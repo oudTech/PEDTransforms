@@ -141,8 +141,10 @@ export function acknowledgementEmail(enquiry: Enquiry): Email {
     steps(nextSteps),
     paragraph(
       `Need to add something? Just reply to this email and quote your reference${
-        contact.phones.length
-          ? `, or call us on ${contact.phones.map((phone) => link(telHref(phone), phone)).join(" or ")}`
+        contact.offices.length
+          ? `, or call us on ${contact.offices
+              .map((office) => `${link(telHref(office.phone), office.phone)} (${escapeHtml(office.locality)})`)
+              .join(" or ")}`
           : ""
       }.`,
       "28px 0 0",
@@ -164,7 +166,9 @@ export function acknowledgementEmail(enquiry: Enquiry): Email {
     ...nextSteps.map((step, index) => `${index + 1}. ${step.title}: ${step.body}`),
     "",
     `Need to add something? Just reply to this email and quote your reference${
-      contact.phones.length ? `, or call us on ${contact.phones.join(" or ")}` : ""
+      contact.offices.length
+        ? `, or call us on ${contact.offices.map((office) => `${office.phone} (${office.locality})`).join(" or ")}`
+        : ""
     }.`,
     "",
     "Kind regards,",

@@ -7,7 +7,7 @@ import { subServices } from "@/data/services";
 import { company, contact } from "@/data/site";
 
 export default function Footer() {
-  const hasContact = Boolean(contact.email || contact.phones.length || contact.address);
+  const hasContact = Boolean(contact.email || contact.offices.length);
 
   return (
     <footer className="bg-[#111] text-white">
@@ -64,14 +64,14 @@ export default function Footer() {
                   </a>
                 </p>
               )}
-              {contact.phones.map((phone) => (
-                <p key={phone}>
-                  <a href={`tel:${phone.replace(/[^\d+]/g, "")}`} className="transition hover:text-white">
-                    {phone}
+              {contact.offices.map((office) => (
+                <p key={office.location} className="pt-1">
+                  <span className="block text-xs text-white/45">{office.location}</span>
+                  <a href={`tel:${office.phone.replace(/[^\d+]/g, "")}`} className="transition hover:text-white">
+                    {office.phone}
                   </a>
                 </p>
               ))}
-              {contact.address && <p className="leading-relaxed">{contact.address}</p>}
             </address>
           ) : (
             <p className="text-sm leading-relaxed text-white/65">

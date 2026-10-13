@@ -158,12 +158,14 @@ export function layout({
   /** Pre-escaped HTML shown under the contact details. */
   footerNote: string;
 }) {
-  const contactLine = [
-    contact.email && link(`mailto:${contact.email}`, contact.email),
-    ...contact.phones.map((phone) => link(telHref(phone), phone)),
-  ]
-    .filter(Boolean)
-    .join(`<span style="color:#c4c4cc">&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>`);
+  const separator = `<span style="color:#c4c4cc">&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>`;
+  const contactLine = contact.email ? link(`mailto:${contact.email}`, contact.email) : "";
+  const officeLines = contact.offices
+    .map(
+      (office) =>
+        `<p style="margin:2px 0 0">${escapeHtml(office.location)}${separator}${link(telHref(office.phone), office.phone)}</p>`,
+    )
+    .join("\n");
   const logoHeight = Math.round((150 * emailLogo.height) / emailLogo.width);
 
   return `<!doctype html>
@@ -214,8 +216,8 @@ ${content}
 <tr><td align="center" class="foot" style="padding:32px 24px 8px;font-family:${font};font-size:13px;line-height:21px;color:${muted}">
 <p style="margin:0;font-size:14px;font-weight:700;color:${ink}">${escapeHtml(company.name)}</p>
 <p style="margin:2px 0 0">${escapeHtml(company.tagline)}</p>
-${contactLine ? `<p style="margin:12px 0 0">${contactLine}</p>` : ""}
-${contact.address ? `<p style="margin:2px 0 0">${escapeHtml(contact.address)}</p>` : ""}
+${contactLine || officeLines ? `<div style="margin:12px 0 0">${contactLine ? `<p style="margin:0">${contactLine}</p>` : ""}
+${officeLines}</div>` : ""}
 <p style="margin:18px auto 0;max-width:440px;font-size:12px;line-height:18px;color:#9a9aa2">${footerNote}</p>
 </td></tr>
 </table>

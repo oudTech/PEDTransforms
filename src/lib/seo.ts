@@ -72,13 +72,13 @@ export const organizationId = `${siteUrl}/#organization`;
 export const websiteId = `${siteUrl}/#website`;
 
 export function organizationJsonLd() {
-  const points = contact.phones.length ? contact.phones : contact.email ? [undefined] : [];
+  const points = contact.offices.length ? contact.offices : contact.email ? [undefined] : [];
   const contactPoint = points.length
-    ? points.map((telephone, index) => ({
+    ? points.map((office, index) => ({
         "@type": "ContactPoint",
         contactType: "customer service",
         ...(contact.email && index === 0 ? { email: contact.email } : {}),
-        ...(telephone ? { telephone } : {}),
+        ...(office ? { telephone: office.phone } : {}),
       }))
     : undefined;
 
@@ -92,14 +92,14 @@ export function organizationJsonLd() {
     logo: absoluteUrl("/logo-light.png"),
     description: company.description,
     slogan: company.tagline,
-    ...(contact.address
+    ...(contact.offices.length
       ? {
-          address: {
+          address: contact.offices.map((office) => ({
             "@type": "PostalAddress",
-            addressLocality: contact.locality,
-            addressRegion: contact.region,
-            addressCountry: contact.countryCode,
-          },
+            addressLocality: office.locality,
+            addressRegion: office.region,
+            addressCountry: office.countryCode,
+          })),
         }
       : {}),
     ...(contactPoint ? { contactPoint } : {}),

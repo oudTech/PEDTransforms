@@ -9,15 +9,35 @@ export const company = {
     "Technology, talent and expertise to improve performance, optimise operations and achieve sustainable growth.",
 };
 
+export type Office = {
+  /** Shown to visitors, e.g. "Hamburg, Germany". */
+  location: string;
+  phone: string;
+  /** Structured parts of `location`, for search engines. */
+  locality: string;
+  region: string;
+  countryCode: string;
+};
+
 // Only fields with a value are displayed or added to structured data.
-export const contact = {
+export const contact: { email: string; offices: Office[]; hours: string } = {
   email: "info@pedtransforms.com",
-  phones: ["+234 706 523 9083", "+49 1573 1086377"],
-  address: "Port Harcourt, Nigeria",
-  /** Structured parts of `address`, for search engines. */
-  locality: "Port Harcourt",
-  region: "Rivers",
-  countryCode: "NG",
+  offices: [
+    {
+      location: "Port Harcourt, Nigeria",
+      phone: "+234 706 523 9083",
+      locality: "Port Harcourt",
+      region: "Rivers",
+      countryCode: "NG",
+    },
+    {
+      location: "Hamburg, Germany",
+      phone: "+49 1573 1086377",
+      locality: "Hamburg",
+      region: "Hamburg",
+      countryCode: "DE",
+    },
+  ],
   hours: "",
 };
 
